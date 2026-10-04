@@ -1,46 +1,58 @@
-# Low Risk
+# Daily routine assistant
 
-A Vibe coded mobile-first web app I built to speed up my daily shift routines as Assistant Lead in the Low Risk area of a food production site. It replaces handwritten notes and mental math with quick taps on the phone.
+A password-protected, mobile-first web app I built to speed up my daily routine as Assistant Lead in the Low Risk area of a food production site. It replaces paper notes, mental math and retyped WhatsApp messages with a few taps on the phone.
 
-**Live:** https://lautaroreche.github.io/lowrisk/
+**Live:** https://lautaroreche.github.io/lowrisk/ (password required)
 
-## Tabs
+**Version:** 2.0.0
+
+## Sections
+
+### 🗓️ Roster
+Weekly work roster. Upload the PDF (or a photo) once a week; PDFs are converted to images on the phone so they open instantly and offline. Shows how old the current roster is.
+
+### To Do
+Opens by default.
+- **Daily tasks** that come back unticked every day, editable and reorderable from *Manage*.
+- **Extra tasks** added on the fly; they stay until ticked.
+- Ticked tasks move to a collapsed **Done** section at the end instead of being deleted.
 
 ### Traceability
 Morning picking of ingredients for the production team.
-- Products listed in the same order as the paper traceability record, so values can be copied straight across.
-- Batch codes in Julian date format (`DDD-SS`): each product keeps its fixed supplier suffix and remembers yesterday's batch, so most days it's just a tap on `+`.
-- Multiple batches per product (e.g. `270/271-19`), never ahead of today's date.
-- Mark products as done or pending (with the missing quantity). Done items collapse and move to the bottom; open items stay on top.
-- kg → boxes calculator for products requested by weight.
-- One-tap copy of the current vinegar batch code as a ready-to-send message.
+- Batch codes in Julian date format (`DDD-SS`) with a fixed supplier suffix per item; adjust with `+` / `−` or type the day.
+- Several batches per item when needed; at the start of each day only the newest one is kept.
+- **Given** box for the quantity handed over so far, done tick, and items pinned as *always done*.
+- kg → boxes calculator for items requested by weight, and a one-tap batch report message.
+- *Manage*: add, rename or remove items, change supplier codes, pin always-done items.
 
 ### Handover
 Shift handover report for the WhatsApp group.
-- Guided form: rice rounds, kitchen porter area, vegetables, back area, afternoon picklist and free notes.
-- Business rules built in (e.g. rice steps can't be selected out of order, lines are merged by round number, identical statuses are grouped).
-- Live preview and a single **Copy report** button; required fields are validated before copying.
+- Guided form with dropdowns, chips and checkboxes; required fields are checked before copying.
+- Business rules built in (rice steps in order, lines merged by round, identical statuses grouped).
+- Header switches automatically from the *estimated* report to the final one once the report time (14:00, or 14:30 on Saturdays) has passed.
+- Everything returns to its defaults every day.
 
 ### Stock
-Daily stock count.
-- Each product starts from the previous day's count; adjust with `+` / `−` or type the number.
-- Units per product and automatic equivalences (e.g. `3 BOX = 12 bottles`).
-- Configurable **reorder points**: products turn yellow when close and red when below.
-- Counter of products still missing a count.
+Daily stock count, alphabetical.
+- Starts from the previous day's count; `+` / `−` or type the number.
+- Unit per product and automatic equivalences (e.g. `3 BOX = 13.5 kg`).
+- Reorder points: products turn yellow when close and red when below.
+- *Manage*: reorder points, editable equivalences, add or remove products.
 
-### Tablet
-In development: lookup from the names used on the delivery sheet to the product names and codes used on the client reporting tablet.
+### Packing
+- **Picklist**: trays, boxes and other packaging, colour-coded by type, with a photo of each carton and an overview photo of all trays.
+- **Sushi**: every sushi tray with its photo and contents (pieces in bold); *Manage* to rename, edit contents, add or remove items and take or replace photos.
 
 ## How it works
-- Single self-contained HTML file: plain HTML, CSS and vanilla JavaScript, no build step, no backend, no dependencies other than the Inter font.
-- Each tab is an isolated module (scoped CSS, independent state).
-- Data is saved automatically in the browser (`localStorage`). It stays on the device that uses it and is not shared between phones.
-- Daily fields reset automatically at the start of a new day; long-lived data (batch codes, reorder points) is kept.
+- A single self-contained HTML file: plain HTML, CSS and vanilla JavaScript. No backend, no build tools, no dependencies other than the Inter font and pdf.js (loaded only when a PDF roster is uploaded).
+- Each section is an isolated module (scoped CSS, independent state); an error in one section can't break the others.
+- Data is stored on the device (`localStorage` and IndexedDB for photos). It never leaves the phone and is not shared between devices.
+- The published page is encrypted with [StatiCrypt](https://github.com/robinmoisson/staticrypt) (AES-256): the repository only contains ciphertext, and the app opens after logging in. Sessions last 10 hours; the log-out button at the end of the tab bar forgets the password on that phone without touching the data.
 
 ## Usage
-Open the link on a phone and add it to the home screen:
-- **iPhone (Safari):** Share → Add to Home Screen
-- **Android (Chrome):** ⋮ menu → Add to Home screen
+Open the link on the phone, log in, and add it to the home screen (Chrome: ⋮ menu → *Add to Home screen*).
+
+When clearing the browser history, untick *Cookies and site data* to keep the app's data.
 
 ## Updating
-Replace `index.html` in this repo with the new version and commit. GitHub Pages redeploys in a minute or two.
+Replace `index.html` with the new encrypted version and commit. GitHub Pages redeploys in a minute or two.
