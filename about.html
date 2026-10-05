@@ -1,289 +1,1173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<title>Daily routine assistant</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="A mobile web app I built to run my shift as Assistant Lead at a food production site: tasks, traceability, handover reports, stock, packing and roster.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://lautaroreche.github.io/daily-routine-assistant/about.html">
-<meta property="og:title" content="Daily routine assistant">
-<meta property="og:description" content="A mobile web app I built to run my shift as Assistant Lead at a food production site: tasks, traceability, handover reports, stock, packing and roster.">
-<meta property="og:image" content="https://lautaroreche.github.io/daily-routine-assistant/preview.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="627">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👍</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --blush:#f8d8d8;      /* logo background */
-  --blush-soft:#fbe7e7;
-  --line:#efc3c3;
-  --signal:#ff3131;     /* logo red */
-  --wine:#b3252f;       /* the app's red */
-  --ink:#2f1d1e;
-  --ink-soft:#6e5455;
-  --paper:#fffafa;
-  --bezel:#2b1618;
-}
-*,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:calc(76px + env(safe-area-inset-top,0px))}
-@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
-body{margin:0;background:var(--blush);color:var(--ink);font:400 17px/1.6 "Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  padding-bottom:env(safe-area-inset-bottom,0px)}
-img{max-width:100%}
-a{color:inherit}
-:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:6px}
-.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Daily routine assistant · Shift app by Lautaro Reche</title>
+  <meta name="description" content="Mobile-first web app for daily food production shift routines: batch code traceability, stock counts with reorder points and WhatsApp handover reports. Vanilla HTML, CSS and JavaScript, no backend.">
+  <meta name="author" content="Lautaro Reche">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lautaroreche.github.io/daily-routine-assistant/about.html">
+  <meta property="og:title" content="Daily routine assistant · Shift app">
+  <meta property="og:description" content="Mobile-first web app for food production shift routines: batch code traceability, stock counts with reorder points and WhatsApp handover reports. No backend.">
+  <meta property="og:image" content="https://lautaroreche.github.io/daily-routine-assistant/preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="627">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#ff3131">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Unbounded:wght@600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #ff3131;
+      --red-dark: #e61f1f;
+      --wine: #b3252f;
+      --blush: #f8d8d8;
+      --blush-2: #fdeeee;
+      --yellow: #e0a100;
+      --green: #1f8a4c;
+      --blue: #2f6fca;
+      --ink: #2a1a1b;
+      --ink-2: #4d3637;
+      --muted: #7d6566;
+      --line: #f0dcdc;
+      --surface: #ffffff;
+      --surface-2: #fdf7f7;
+      --bezel: #2b1618;
+      --code-bg: #1e1314;
+      --radius: 12px;
+      --shadow-sm: 0 1px 2px rgba(60, 20, 22, .06), 0 1px 3px rgba(60, 20, 22, .08);
+      --shadow-md: 0 4px 12px rgba(60, 20, 22, .08), 0 2px 4px rgba(60, 20, 22, .05);
+      --shadow-lg: 0 30px 60px -20px rgba(110, 30, 36, .45), 0 8px 18px rgba(110, 30, 36, .15);
+      --max: 1140px;
+      --display: "Unbounded", "Inter", system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 76px; -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: var(--ink);
+      background: var(--surface-2);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    button { font: inherit; color: inherit; }
+    code, pre { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+    :focus-visible { outline: 3px solid color-mix(in srgb, var(--red) 55%, transparent); outline-offset: 2px; }
+    .logo-img { display: inline-block; background: url(data:image/png;base64,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) center / contain no-repeat; flex: none; }
 
-/* ---------- phone frame used for every screen ---------- */
-.phone{position:relative;border-radius:34px;background:var(--bezel);padding:9px;box-shadow:0 30px 60px -20px rgba(110,30,36,.45),0 8px 18px rgba(110,30,36,.15)}
-.phone img{display:block;width:100%;height:auto;border-radius:26px;background:var(--paper)}
+    /* ---------- Nav ---------- */
+    .nav {
+      position: sticky; top: 0; z-index: 40;
+      background: rgba(255, 255, 255, .86);
+      backdrop-filter: saturate(160%) blur(10px);
+      -webkit-backdrop-filter: saturate(160%) blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; font-size: 1.08rem; letter-spacing: -.01em; white-space: nowrap; }
+    .brand .logo-img { width: 32px; height: 32px; }
+    .nav-links { display: flex; align-items: center; gap: 26px; }
+    .nav-links a { text-decoration: none; color: var(--ink-2); font-size: .95rem; font-weight: 500; }
+    .nav-links a:hover { color: var(--red); }
+    @media (max-width: 860px) { .nav-links .hide-sm { display: none; } .nav-links { gap: 14px; } }
+    @media (max-width: 400px) { .brand span.full { display: none; } }
 
-/* ---------- hero ---------- */
-.hero{padding:calc(48px + env(safe-area-inset-top,0px)) 0 24px;overflow:hidden}
-.hero .wrap{display:grid;gap:40px;align-items:center}
-h1{font-family:"Unbounded","Inter",sans-serif;font-weight:800;color:var(--signal);font-size:clamp(42px,7.4vw,84px);line-height:.98;letter-spacing:-.025em;margin:0}
-.lede{font-size:clamp(18px,2vw,21px);max-width:54ch;margin:22px 0 0}
-.facts{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0;padding:0;list-style:none}
-.facts li{background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:14.5px;font-weight:500}
-.cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:28px}
-.btn{display:inline-flex;align-items:center;height:52px;padding:0 26px;border-radius:14px;background:var(--signal);color:#fff;font-weight:600;text-decoration:none;box-shadow:0 10px 24px rgba(255,49,49,.3)}
-.btn:hover{background:#ea2424}
-.btn.ghost{background:transparent;color:var(--ink);box-shadow:none;border:1.5px solid var(--ink)}
-.btn.ghost:hover{background:var(--paper)}
-.fineprint{font-size:14.5px;color:var(--ink-soft);margin:14px 0 0}
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 20px; border-radius: 10px; font-weight: 600; font-size: .98rem;
+      text-decoration: none; border: 1px solid transparent; cursor: pointer;
+      transition: transform .15s ease, background .15s ease, box-shadow .15s ease, border-color .15s ease;
+      white-space: nowrap;
+    }
+    .btn svg { width: 18px; height: 18px; flex: none; }
+    .btn-primary { background: var(--red); color: #fff; box-shadow: 0 8px 20px -8px rgba(255, 49, 49, .75); }
+    .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+    .btn-ghost { background: #fff; color: var(--ink); border-color: var(--line); box-shadow: var(--shadow-sm); }
+    .btn-ghost:hover { border-color: #e2bcbc; transform: translateY(-1px); }
+    .btn-sm { padding: 7px 12px; font-size: .88rem; border-radius: 8px; }
 
-/* the fan of three phones */
-.fan{position:relative;aspect-ratio:1/.86;max-width:560px;margin:0 auto;width:100%}
-.fan .phone{position:absolute;width:min(56%,300px);top:50%;left:50%}
-.fan .p1{transform:translate(-96%,-46%) rotate(-8deg);z-index:1}
-.fan .p2{transform:translate(-50%,-54%);z-index:3}
-.fan .p3{transform:translate(-4%,-46%) rotate(8deg);z-index:2}
-@media (prefers-reduced-motion:no-preference){
-  .fan .phone{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
-  .fan .p1{animation-delay:.08s}.fan .p3{animation-delay:.16s}
-  @keyframes rise{from{opacity:0;margin-top:40px}to{opacity:1;margin-top:0}}
-}
-@media (min-width:960px){ .hero .wrap{grid-template-columns:1.05fr 1fr} }
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative; overflow: hidden;
+      background: linear-gradient(135deg, #fde6e6 0%, #fff5f3 42%, #fdecec 72%, #fff6e8 100%);
+      border-bottom: 1px solid var(--line);
+    }
+    .hero::before, .hero::after { content: ""; position: absolute; border-radius: 50%; pointer-events: none; }
+    .hero::before { width: 620px; height: 620px; top: -260px; left: -200px; background: radial-gradient(circle, rgba(255, 49, 49, .16) 0%, transparent 70%); }
+    .hero::after { width: 560px; height: 560px; bottom: -260px; right: -160px; background: radial-gradient(circle, rgba(224, 161, 0, .16) 0%, transparent 70%); }
+    .hero .wrap { position: relative; z-index: 1; padding-top: 64px; padding-bottom: 72px; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; align-items: center; }
+    @media (min-width: 980px) { .hero-grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 32px; } }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: .82rem; font-weight: 600; letter-spacing: .02em; color: var(--ink-2);
+      background: rgba(255, 255, 255, .8); border: 1px solid var(--line);
+      padding: 5px 12px; border-radius: 999px;
+    }
+    .dots { display: inline-flex; gap: 3px; }
+    .dots i { width: 6px; height: 6px; border-radius: 50%; display: block; }
+    h1 {
+      font-family: var(--display);
+      font-size: clamp(2.2rem, 5.4vw, 3.7rem); line-height: 1.04; letter-spacing: -.03em;
+      margin: 20px 0 20px; font-weight: 800; max-width: 15ch;
+    }
+    h1 .accent { background: linear-gradient(90deg, var(--red), #ff7a1a 55%, var(--wine)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lead { font-size: clamp(1.05rem, 1.6vw, 1.18rem); color: var(--ink-2); max-width: 56ch; margin: 0 0 28px; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .status { margin-top: 20px; display: flex; align-items: flex-start; gap: 10px; font-size: .9rem; color: var(--muted); max-width: 60ch; }
+    @media (max-width: 600px) { .status { flex-direction: column; gap: 8px; } }
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 7px; flex: none;
+      padding: 4px 10px; border-radius: 999px; font-weight: 600; font-size: .8rem;
+      background: #fff; border: 1px solid var(--line); color: var(--ink-2);
+    }
+    .status-pill svg { width: 14px; height: 14px; color: var(--wine); }
 
-/* ---------- section index ---------- */
-.index{position:sticky;top:0;z-index:20;background:rgba(248,216,216,.88);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);
-  border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
-.index ul{display:flex;gap:8px;margin:0;padding:12px 24px;list-style:none;overflow-x:auto;max-width:1140px;margin:0 auto;scrollbar-width:none}
-.index ul::-webkit-scrollbar{display:none}
-.index a{display:block;white-space:nowrap;text-decoration:none;font-weight:600;font-size:14.5px;padding:8px 16px;border-radius:999px;background:var(--paper);border:1px solid var(--line)}
-.index a:hover{border-color:var(--wine);color:var(--wine)}
+    .phone { position: relative; border-radius: 34px; background: var(--bezel); padding: 9px; box-shadow: var(--shadow-lg); }
+    .phone img { width: 100%; height: auto; border-radius: 26px; background: #fff; }
+    .fan { position: relative; aspect-ratio: 1 / .9; max-width: 560px; margin: 0 auto; width: 100%; }
+    .fan .phone { position: absolute; width: min(54%, 290px); top: 50%; left: 50%; }
+    .fan .p1 { transform: translate(-96%, -46%) rotate(-8deg); z-index: 1; }
+    .fan .p2 { transform: translate(-50%, -54%); z-index: 3; }
+    .fan .p3 { transform: translate(-4%, -46%) rotate(8deg); z-index: 2; }
+    @media (max-width: 600px) { .fan .phone { width: 46%; } }
+    .float {
+      position: absolute; z-index: 4; display: inline-flex; align-items: center; gap: 8px;
+      background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px;
+      font-size: .82rem; font-weight: 600; box-shadow: var(--shadow-md); white-space: nowrap;
+    }
+    .float .mono { font-family: "JetBrains Mono", monospace; font-size: .8rem; color: var(--green); }
+    .float.f1 { left: 0; bottom: 10%; }
+    .float.f2 { right: 0; top: 8%; }
+    .float i { width: 8px; height: 8px; border-radius: 50%; display: block; }
+    @media (max-width: 520px) { .float { font-size: .72rem; padding: 6px 9px; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .fan .phone, .float { animation: rise .9s cubic-bezier(.2, .7, .2, 1) both; }
+      .fan .p1 { animation-delay: .08s; } .fan .p3 { animation-delay: .16s; }
+      .float.f1 { animation-delay: .5s; } .float.f2 { animation-delay: .65s; }
+      @keyframes rise { from { opacity: 0; margin-top: 36px; } to { opacity: 1; margin-top: 0; } }
+    }
 
-/* ---------- one block per screen ---------- */
-.screen{padding:72px 0;border-bottom:1px solid var(--line)}
-.screen .wrap{display:grid;gap:36px;align-items:start}
-.screen .shot{max-width:340px;width:100%;margin:0 auto}
-@media (min-width:900px){
-  .screen .wrap{grid-template-columns:340px 1fr;gap:72px}
-  .screen.flip .wrap{grid-template-columns:1fr 340px}
-  .screen.flip .shot{order:2}
-  .screen .shot{position:sticky;top:96px}
-}
-h2{font-family:"Unbounded","Inter",sans-serif;font-weight:800;font-size:clamp(30px,4.2vw,46px);line-height:1.05;letter-spacing:-.02em;margin:0;color:var(--ink)}
-.screen h2 .tab{color:var(--wine)}
-.summary{font-size:clamp(18px,1.9vw,20px);margin:16px 0 0;max-width:56ch}
-.features{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:14px}
-.features li{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
-.features b{display:block;font-size:16.5px;margin-bottom:2px}
-.features span{color:var(--ink-soft);font-size:15.5px;line-height:1.55;display:block}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.chip{font-size:13px;font-weight:600;border-radius:999px;padding:3px 10px;background:var(--blush-soft);border:1px solid var(--line)}
-.chip.red{color:var(--wine)} .chip.yellow{color:#8a5a00;background:#fff5d6;border-color:#f3dc9c}
-.chip.green{color:#1c7c43;background:#e0f3e7;border-color:#b6e0c4}
-.chip.blue{color:#245fa8;background:#e3eefb;border-color:#bcd4f2}
-.chip.orange{color:#b4560e;background:#fdebdc;border-color:#f6c9a4}
-.privacy{font-size:14.5px;color:var(--ink-soft);margin:18px 0 0}
+    .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 56px; }
+    @media (max-width: 760px) { .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 40px; } }
+    .fact { background: rgba(255, 255, 255, .78); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; }
+    .fact strong { display: block; font-family: var(--display); font-size: 1.5rem; line-height: 1.1; letter-spacing: -.02em; color: var(--wine); }
+    .fact span { font-size: .88rem; color: var(--ink-2); }
 
-/* ---------- how it's built ---------- */
-.built{padding:80px 0 40px}
-.built .grid{display:grid;gap:18px;margin-top:30px}
-@media (min-width:760px){ .built .grid{grid-template-columns:1fr 1fr} }
-.built .card{background:var(--ink);color:#f8eaea;border-radius:22px;padding:24px 24px 22px}
-.built h3{font-family:"Unbounded","Inter",sans-serif;font-weight:600;font-size:19px;margin:0 0 8px;color:#fff}
-.built p{margin:0;color:#e5cfcf;font-size:15.5px}
-.closing{padding:40px 0 72px;text-align:left}
-.closing p{max-width:60ch}
-footer{padding:28px 0 48px;color:var(--ink-soft);font-size:15px;border-top:1px solid var(--line)}
-</style>
+    /* ---------- Sections ---------- */
+    section { padding: 88px 0; }
+    .section-head { max-width: 680px; margin-bottom: 40px; }
+    .kicker { font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--red); margin: 0 0 10px; }
+    h2 { font-family: var(--display); font-size: clamp(1.6rem, 3.1vw, 2.25rem); line-height: 1.12; letter-spacing: -.025em; margin: 0 0 14px; font-weight: 800; }
+    .section-head p { color: var(--ink-2); margin: 0; font-size: 1.05rem; }
+    .section-head .kicker { color: var(--red); margin: 0 0 10px; font-size: .8rem; }
+    .alt { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+    /* ---------- Demo ---------- */
+    .demo-grid { display: grid; grid-template-columns: 390px minmax(0, 1fr); gap: 36px; align-items: start; }
+    @media (max-width: 920px) { .demo-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; } }
+    .device { width: 100%; max-width: 390px; margin: 0 auto; background: var(--bezel); border-radius: 42px; padding: 10px; box-shadow: var(--shadow-lg); }
+    .ui {
+      background: #f8f3f3; border-radius: 32px; overflow: hidden; height: 620px;
+      display: flex; flex-direction: column; font-size: 14px; line-height: 1.35; position: relative;
+    }
+    @media (max-width: 420px) { .ui { height: 560px; } }
+    .ui-tabs { display: flex; gap: 6px; padding: 14px 10px 8px; overflow-x: auto; background: #fff; scrollbar-width: none; flex: none; }
+    .ui-tabs::-webkit-scrollbar { display: none; }
+    .ui-tab { flex: none; padding: 7px 14px; border-radius: 999px; border: 1px solid #eddcdc; background: #f9f1f1; font-weight: 600; font-size: 13px; color: #7a5f60; cursor: pointer; }
+    .ui-tab[aria-selected="true"] { background: var(--wine); border-color: var(--wine); color: #fff; }
+    .ui-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 16px; background: #fff; border-bottom: 1px solid #f0e4e4; flex: none; }
+    .ui-crumb { font-weight: 700; font-size: 16px; }
+    .ui-crumb b { color: var(--wine); }
+    .ui-jd { text-align: right; line-height: 1; }
+    .ui-jd strong { color: var(--wine); font-size: 19px; display: block; }
+    .ui-jd small { font-size: 10.5px; color: var(--muted); }
+    .ui-body { flex: 1; overflow-y: auto; padding: 12px; overscroll-behavior: contain; }
+    .ui-foot { flex: none; padding: 10px 12px 14px; background: linear-gradient(to top, #f8f3f3 70%, rgba(248, 243, 243, 0)); }
+    .ui-btn { border: 1.5px solid var(--wine); color: var(--wine); background: #fff; border-radius: 999px; padding: 5px 12px; font-weight: 600; font-size: 12.5px; cursor: pointer; }
+    .ui-big { width: 100%; border: 0; border-radius: 12px; background: var(--wine); color: #fff; font-weight: 700; font-size: 15px; padding: 13px; cursor: pointer; }
+    .ui-big.ok { background: var(--green); }
+    .list { background: #fff; border: 1px solid #f0e2e2; border-radius: 12px; overflow: hidden; }
+    .list + .list, .ui-sub + .list { margin-top: 10px; }
+    .ui-sub { font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 14px 4px 6px; display: flex; align-items: center; gap: 6px; cursor: pointer; background: none; border: 0; padding: 0; }
+    .ui-sub svg { width: 12px; height: 12px; transition: transform .15s ease; }
+    .ui-sub[aria-expanded="true"] svg { transform: rotate(90deg); }
+    .row { --rc: var(--wine); display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-left: 4px solid var(--rc); border-bottom: 1px solid #f3e8e8; background: #fff; }
+    .row:last-child { border-bottom: 0; }
+    .row .grow { flex: 1; min-width: 0; }
+    .row small { display: block; font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 1px 6px; border-radius: 4px; background: #eef3fd; color: var(--blue); margin-left: 6px; vertical-align: 1px; }
+    .tag.new { background: #fff3d6; color: #8a5a00; }
+    .circle { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #d9c4c4; background: #fff; flex: none; cursor: pointer; display: grid; place-items: center; padding: 0; }
+    .circle svg { width: 13px; height: 13px; color: #fff; opacity: 0; }
+    .row.is-done { --rc: var(--green); background: #f3faf5; color: var(--muted); }
+    .row.is-done .circle { background: var(--green); border-color: var(--green); }
+    .row.is-done .circle svg { opacity: 1; }
+    .row.is-done .grow > span { text-decoration: line-through; }
+    .add { display: flex; gap: 8px; }
+    .add input { flex: 1; min-width: 0; height: 40px; border: 1px solid #e8d6d6; border-radius: 10px; padding: 0 12px; font: inherit; font-size: 14px; background: #fff; }
+    .add button { border: 0; background: var(--wine); color: #fff; font-weight: 700; border-radius: 10px; padding: 0 16px; cursor: pointer; }
+
+    /* traceability rows */
+    .tr { --rc: var(--wine); display: block; padding: 9px 12px 10px; }
+    .tr .name { font-weight: 700; font-size: 13.5px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+    .tr .ctrl { display: flex; align-items: center; gap: 8px; }
+    .tr .sfx { color: var(--muted); font-weight: 600; font-size: 13px; }
+    .tr .sp { flex: 1; }
+    .tr.started { --rc: var(--yellow); background: #fffcef; }
+    .tr.done { --rc: var(--green); background: #e5f4ea; display: flex; align-items: center; gap: 10px; padding: 9px 12px; }
+    .tr.done .name { margin: 0; color: var(--green); flex: 1; }
+    .tr.done .mono { font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 500; color: var(--green); }
+    .step { display: inline-flex; border: 1px solid #ebdada; border-radius: 9px; overflow: hidden; background: #fff; }
+    .step button { width: 32px; height: 34px; border: 0; background: #fbf4f4; color: var(--wine); font-size: 18px; font-weight: 600; cursor: pointer; padding: 0; }
+    .step button:disabled { color: #e3caca; cursor: not-allowed; }
+    .step output { min-width: 44px; text-align: center; font-weight: 600; line-height: 34px; font-variant-numeric: tabular-nums; }
+    .given { width: 56px; height: 34px; border: 1px solid #ebdada; border-radius: 9px; text-align: center; font: inherit; font-weight: 600; background: #fff; -moz-appearance: textfield; }
+    .given::-webkit-outer-spin-button, .given::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .tr.started .given { background: #fff4cc; border-color: #f0cf6a; color: #8a5a00; }
+    .chk { width: 38px; height: 34px; border: 1.5px solid var(--green); border-radius: 9px; color: var(--green); background: #fff; cursor: pointer; display: grid; place-items: center; padding: 0; flex: none; }
+    .chk svg { width: 17px; height: 17px; }
+    .tr.done .chk { background: var(--green); color: #fff; border-radius: 999px; width: 44px; height: 28px; }
+    .calc { margin-top: 12px; background: #fff; border: 1px dashed #e3c9c9; border-radius: 12px; padding: 10px 12px; font-size: 13px; }
+    .calc b { display: block; font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .calc .line { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .calc input { width: 56px; height: 30px; border: 1px solid #ebdada; border-radius: 8px; text-align: center; font: inherit; font-weight: 600; }
+    .calc output { font-weight: 700; color: var(--wine); }
+
+    /* stock rows */
+    .st { --rc: #4c8fe0; }
+    .st .grow > span { font-weight: 600; font-size: 13.5px; }
+    .st .unit { width: 66px; font-size: 10.5px; font-weight: 700; color: #6d5556; text-transform: uppercase; line-height: 1.25; }
+    .st .unit em { display: block; font-style: normal; text-transform: none; color: var(--ink); }
+    .st.close { background: #fff6da; }
+    .st.close .grow > span { color: #8a5a00; }
+    .st.low { background: #fdeaea; }
+    .st.low .grow > span { color: var(--wine); }
+
+    /* handover form */
+    .ho { background: #fff; border: 1px solid #f0e2e2; border-radius: 12px; padding: 12px; }
+    .ho + .ho { margin-top: 10px; }
+    .ho h4 { margin: 0 0 8px; font-size: 13px; color: var(--wine); display: flex; align-items: center; gap: 7px; }
+    .ho h4 span { width: 20px; height: 20px; border-radius: 5px; background: #fde6e6; display: grid; place-items: center; font-size: 11px; }
+    .ho label, .ho .lbl { display: block; font-size: 12px; color: #6d5556; margin: 8px 0 4px; }
+    .ho .lbl i { color: var(--red); font-style: normal; }
+    .ho select, .ho textarea { width: 100%; border: 1px solid #ebdada; border-radius: 9px; background: #fbf7f7; font: inherit; font-size: 14px; padding: 8px 10px; color: var(--ink); }
+    .ho textarea { resize: vertical; min-height: 54px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .cb { border: 1px solid #ebdada; background: #fbf4f4; border-radius: 999px; padding: 6px 11px; font-size: 12.5px; cursor: pointer; }
+    .cb.on { background: var(--wine); border-color: var(--wine); color: #fff; font-weight: 600; }
+    .cb:disabled { color: #c9b3b3; cursor: not-allowed; background: #fdf9f9; }
+    .ho .check { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink); margin-top: 10px; }
+    .ho .check input { width: 18px; height: 18px; accent-color: var(--wine); margin: 0; }
+    .invalid { border-radius: 10px; box-shadow: 0 0 0 2px rgba(255, 49, 49, .55); }
+    select.invalid { border-color: var(--red); }
+
+    /* output panel */
+    .out { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow-md); overflow: hidden; min-width: 0; }
+    .out-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--line); background: #fffafa; flex-wrap: wrap; }
+    .out-head h3 { margin: 0; font-size: 1.02rem; }
+    .out-head p { margin: 0; font-size: .85rem; color: var(--muted); }
+    .out-body { padding: 18px; min-height: 360px; }
+    .out-log { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 18px; border-top: 1px solid var(--line); background: #fffafa; font-size: .8rem; color: var(--muted); }
+    .out-log code { font-size: .76rem; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 5px; padding: 2px 8px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .out-log .flash { animation: flash .8s ease; }
+    @keyframes flash { from { background: #fff1c2; } to { background: #fff; } }
+    .out-log button { margin-left: auto; background: none; border: 0; color: var(--red); font-weight: 600; cursor: pointer; padding: 0; }
+    .progress { height: 10px; background: #f6e8e8; border-radius: 999px; overflow: hidden; margin: 10px 0 6px; }
+    .progress i { display: block; height: 100%; background: linear-gradient(90deg, var(--red), #ff7a1a); border-radius: 999px; transition: width .35s ease; }
+    .big-num { font-family: var(--display); font-size: 2.4rem; line-height: 1; letter-spacing: -.03em; }
+    .big-num small { font-family: "Inter", sans-serif; font-size: 1rem; color: var(--muted); letter-spacing: 0; }
+    .mini-list { list-style: none; margin: 14px 0 0; padding: 0; border-top: 1px solid var(--line); }
+    .mini-list li { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: .93rem; }
+    .mini-list li .t { margin-left: auto; font-family: "JetBrains Mono", monospace; font-size: .8rem; color: var(--muted); }
+    .mini-list .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+    .empty { color: var(--muted); font-size: .93rem; padding: 14px 0; }
+    .sheet { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .sheet th { text-align: left; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; padding: 0 8px 8px; border-bottom: 2px solid var(--ink); }
+    .sheet td { padding: 9px 8px; border-bottom: 1px dashed #e7cfcf; font-variant-numeric: tabular-nums; }
+    .sheet td.hand { font-family: "JetBrains Mono", monospace; font-size: .86rem; color: #1d3f9a; }
+    .sheet tr.pending td.hand { color: #c9b3b3; }
+    .legend { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .pill { display: inline-flex; align-items: center; gap: 6px; font-size: .78rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface-2); }
+    .pill i { width: 8px; height: 8px; border-radius: 50%; display: block; }
+    .order-group { margin-top: 14px; }
+    .order-group h4 { margin: 0 0 6px; font-size: .9rem; display: flex; align-items: center; gap: 8px; }
+    .order-group h4 i { width: 10px; height: 10px; border-radius: 3px; display: block; }
+    .wa { background: #efeae2 radial-gradient(rgba(0, 0, 0, .035) 1px, transparent 1px) 0 0 / 14px 14px; border-radius: 12px; padding: 18px 14px; }
+    .wa-bubble { position: relative; background: #d9fdd3; border-radius: 10px 0 10px 10px; padding: 9px 11px 20px; margin-left: auto; max-width: 92%; width: fit-content; font-size: .9rem; line-height: 1.45; box-shadow: 0 1px 1px rgba(0, 0, 0, .1); color: #111b21; word-wrap: break-word; }
+    .wa-bubble::after { content: ""; position: absolute; top: 0; right: -8px; border-width: 0 0 10px 8px; border-style: solid; border-color: transparent transparent transparent #d9fdd3; }
+    .wa-bubble .time { position: absolute; right: 9px; bottom: 4px; font-size: .68rem; color: #667781; }
+    .wa-bubble .miss { color: #c62828; font-style: italic; }
+    .copy-row { display: flex; align-items: center; gap: 12px; margin-top: 14px; flex-wrap: wrap; font-size: .88rem; color: var(--muted); }
+    .copy-row .err { color: var(--wine); font-weight: 600; }
+
+    /* ---------- Features ---------- */
+    .features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    @media (max-width: 900px) { .features { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 600px) { .features { grid-template-columns: minmax(0, 1fr); } }
+    .feature { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow-sm); }
+    .feature .icon { width: 42px; height: 42px; border-radius: 10px; display: grid; place-items: center; margin-bottom: 14px; }
+    .feature .icon svg { width: 22px; height: 22px; }
+    .feature h3 { margin: 0 0 6px; font-size: 1.05rem; letter-spacing: -.01em; }
+    .feature p { margin: 0; color: var(--ink-2); font-size: .95rem; }
+    .feature .legend { margin: 12px 0 0; }
+
+    /* ---------- Screens ---------- */
+    .tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 24px; scrollbar-width: none; }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab { flex: none; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: #fff; font-size: .92rem; font-weight: 600; color: var(--ink-2); cursor: pointer; }
+    .tab[aria-selected="true"] { background: var(--wine); border-color: var(--wine); color: #fff; }
+    .shot-grid { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 56px; align-items: start; }
+    @media (max-width: 900px) { .shot-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; } }
+    .shot-grid .phone { max-width: 340px; margin: 0 auto; width: 100%; }
+    .shot-grid .phone img { cursor: zoom-in; }
+    .shot-caption h3 { font-family: var(--display); margin: 4px 0 10px; font-size: 1.5rem; letter-spacing: -.02em; }
+    .shot-caption > p { margin: 0 0 18px; color: var(--ink-2); font-size: 1.05rem; max-width: 58ch; }
+    .points { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .points li { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; }
+    .points b { display: block; font-size: .98rem; margin-bottom: 1px; }
+    .points span { color: var(--ink-2); font-size: .92rem; }
+    .shot-note { font-size: .85rem; color: var(--muted); margin-top: 14px; }
+
+    /* ---------- Under the hood ---------- */
+    .flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items: stretch; gap: 10px; margin-bottom: 36px; }
+    .flow .node { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow-sm); }
+    .flow .node small { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .flow .node strong { display: block; font-size: 1.02rem; margin-bottom: 6px; }
+    .flow .node span { font-size: .88rem; color: var(--ink-2); display: block; }
+    .flow .node.lock { border-color: #f1c2c2; background: #fff8f8; }
+    .flow .arrow { display: grid; place-items: center; color: #c9a9a9; }
+    .flow .arrow svg { width: 26px; height: 26px; }
+    @media (max-width: 980px) {
+      .flow { grid-template-columns: minmax(0, 1fr); }
+      .flow .arrow svg { transform: rotate(90deg); }
+    }
+    .principles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-bottom: 36px; }
+    @media (max-width: 980px) { .principles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 560px) { .principles { grid-template-columns: minmax(0, 1fr); } }
+    .principle { border-left: 3px solid var(--red); padding: 2px 0 2px 14px; }
+    .principle h3 { margin: 0 0 4px; font-size: .98rem; }
+    .principle p { margin: 0; font-size: .9rem; color: var(--ink-2); }
+    .code-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    @media (max-width: 900px) { .code-grid { grid-template-columns: minmax(0, 1fr); } }
+    .code-card { background: var(--code-bg); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-md); min-width: 0; }
+    .code-card header { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 14px; border-bottom: 1px solid rgba(255, 255, 255, .08); color: #b9a1a2; font-size: .8rem; }
+    .code-card header b { color: #f3e4e4; font-weight: 500; font-family: "JetBrains Mono", ui-monospace, monospace; }
+    .code-card pre { margin: 0; padding: 16px; overflow-x: auto; font-size: .8rem; line-height: 1.65; color: #f3e4e4; }
+    .tok-k { color: #ff8a8a; } .tok-s { color: #a5d6a7; } .tok-c { color: #8c7273; font-style: italic; } .tok-f { color: #ffc77a; } .tok-n { color: #8ec5ff; }
+    .stack { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 36px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #fff; border: 1px solid var(--line); font-size: .9rem; font-weight: 600; box-shadow: var(--shadow-sm); }
+    .chip i { width: 8px; height: 8px; border-radius: 50%; display: block; }
+
+    /* ---------- Install ---------- */
+    .run-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 36px; align-items: start; }
+    @media (max-width: 900px) { .run-grid { grid-template-columns: minmax(0, 1fr); } }
+    .note { background: #fff8e6; border: 1px solid #ffe2a3; border-radius: var(--radius); padding: 16px 18px; color: #6b4e00; font-size: .93rem; }
+    .note strong { color: #4a3600; }
+    .steps { margin: 18px 0 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 12px; }
+    .steps li { counter-increment: s; display: flex; gap: 12px; color: var(--ink-2); }
+    .steps li::before { content: counter(s); flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--wine); color: #fff; font-weight: 700; font-size: .85rem; display: grid; place-items: center; margin-top: 1px; }
+    .steps code, .note code, p code { font-size: .85em; background: rgba(42, 26, 27, .07); padding: 1px 5px; border-radius: 4px; }
+
+    /* ---------- Footer ---------- */
+    footer { padding: 56px 0; background: var(--ink); color: #e0cccc; }
+    footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; }
+    footer h2 { color: #fff; font-size: 1.4rem; margin: 0 0 6px; }
+    footer p { margin: 0; color: #b69c9d; }
+    footer .btn-ghost { background: transparent; color: #fff; border-color: #5a3d3f; box-shadow: none; }
+    footer .btn-ghost:hover { border-color: #8a6b6c; }
+    .fineprint { border-top: 1px solid #3d2a2b; margin-top: 40px; padding-top: 20px; width: 100%; font-size: .82rem; color: #937a7b; }
+
+    /* ---------- Lightbox ---------- */
+    dialog.lightbox { padding: 0; border: 0; background: transparent; max-width: min(96vw, 900px); max-height: 94vh; }
+    dialog.lightbox::backdrop { background: rgba(30, 15, 16, .85); }
+    dialog.lightbox img { max-height: 90vh; width: auto; border-radius: 16px; box-shadow: var(--shadow-lg); }
+    dialog.lightbox button { position: fixed; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; border: 0; background: #fff; cursor: pointer; display: grid; place-items: center; box-shadow: var(--shadow-md); }
+    dialog.lightbox button svg { width: 18px; height: 18px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="wrap">
-    <div>
-      <h1>Daily routine assistant</h1>
-      <p class="lede">I work as Assistant Lead at a food production site. My mornings used to run on paper sheets, mental maths and WhatsApp messages typed from scratch, so I built a phone app that does that work with a few taps.</p>
-      <ul class="facts" aria-label="Key facts">
-        <li>Six sections in one app</li>
-        <li>Works on any phone</li>
-        <li>No backend</li>
-        <li>Encrypted</li>
-      </ul>
-      <div class="cta">
-        <a class="btn" href="./">Open the app</a>
-        <a class="btn ghost" href="#todo">See each screen</a>
-      </div>
-      <p class="fineprint">The app asks for a password because it holds internal work data. The screens below come from the real app, with names, suppliers, codes and the roster hidden or replaced.</p>
-    </div>
-    <div class="fan" aria-hidden="true">
-      <div class="phone p1"><img src="screens/traceability.jpg" width="693" height="845" alt=""></div>
-      <div class="phone p2"><img src="screens/todo.jpg" width="653" height="828" alt=""></div>
-      <div class="phone p3"><img src="screens/stock.jpg" width="692" height="849" alt=""></div>
-    </div>
-  </div>
-</header>
+  <!-- Reusable SVG symbols -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></g></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
 
-<nav class="index" aria-label="Sections of the app">
-  <ul>
-    <li><a href="#todo">To Do</a></li>
-    <li><a href="#traceability">Traceability</a></li>
-    <li><a href="#handover">Handover</a></li>
-    <li><a href="#stock">Stock</a></li>
-    <li><a href="#packing">Packing</a></li>
-    <li><a href="#roster">Roster</a></li>
-    <li><a href="#built">How it's built</a></li>
-  </ul>
-</nav>
-
-<main>
-  <section class="screen" id="todo" aria-labelledby="h-todo">
+  <!-- ================= NAV ================= -->
+  <nav class="nav" aria-label="Main">
     <div class="wrap">
-      <div class="shot"><div class="phone"><img src="screens/todo.jpg" width="653" height="828" loading="lazy" alt="To Do screen with the list of daily tasks"></div></div>
+      <a class="brand" href="#top"><span class="logo-img" aria-hidden="true"></span><span>Daily routine <span class="full">assistant</span></span></a>
+      <div class="nav-links">
+        <a class="hide-sm" href="#demo">Demo</a>
+        <a class="hide-sm" href="#features">Features</a>
+        <a class="hide-sm" href="#screens">Screens</a>
+        <a class="hide-sm" href="#under-the-hood">Under the hood</a>
+        <a class="btn btn-ghost btn-sm" href="https://github.com/lautaroreche/daily-routine-assistant" target="_blank" rel="noopener">
+          <svg aria-hidden="true"><use href="#i-github"/></svg><span>Repo</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================= HERO ================= -->
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">
+            <span class="dots" aria-hidden="true"><i style="background:var(--wine)"></i><i style="background:var(--yellow)"></i><i style="background:var(--green)"></i></span>
+            Personal project · Vibe-coded mobile web app
+          </span>
+          <h1>My whole shift, in <span class="accent">one phone app.</span></h1>
+          <p class="lead">I work as Assistant Lead at a food production site. My mornings used to run on paper sheets, mental maths and WhatsApp messages typed from scratch, so I built an app for it: <strong>batch code traceability, stock counts with reorder points and WhatsApp handover reports</strong>, in vanilla HTML, CSS and JavaScript with no backend.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="./">
+              <svg aria-hidden="true"><use href="#i-lock"/></svg> Open the app
+            </a>
+            <a class="btn btn-ghost" href="#demo">
+              Try the demo <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
+          </div>
+          <div class="status">
+            <span class="status-pill"><svg aria-hidden="true"><use href="#i-lock"/></svg>Password protected</span>
+            <span>The live app holds internal work data, so it asks for a password. The demo and screenshots on this page use sample data, with names, suppliers and codes replaced.</span>
+          </div>
+        </div>
+
+        <div class="fan" aria-hidden="true">
+          <div class="phone p1"><img src="screens/traceability.jpg" width="693" height="845" alt=""></div>
+          <div class="phone p2"><img src="screens/todo.jpg" width="653" height="828" alt=""></div>
+          <div class="phone p3"><img src="screens/stock.jpg" width="692" height="849" alt=""></div>
+          <div class="float f1"><i style="background:var(--green)"></i>Ingredient C <span class="mono" id="float-code">275-01</span></div>
+          <div class="float f2"><svg width="16" height="16" style="color:var(--green)"><use href="#i-check"/></svg>Handover copied</div>
+        </div>
+      </div>
+
+      <div class="facts">
+        <div class="fact"><strong>6</strong><span>sections in one app</span></div>
+        <div class="fact"><strong>1</strong><span>self-contained HTML file</span></div>
+        <div class="fact"><strong>0</strong><span>servers or databases</span></div>
+        <div class="fact"><strong>AES-256</strong><span>encrypted on GitHub Pages</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= DEMO ================= -->
+    <section id="demo">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Try it here</p>
+          <h2>Use the app, no password needed</h2>
+          <p>A working replica of four screens, running entirely in your browser with sample data. Tap around: the panel next to the phone shows what each screen produces. Nothing is saved.</p>
+        </div>
+
+        <div class="demo-grid">
+          <div class="device">
+            <div class="ui" id="ui">
+              <div class="ui-tabs" role="tablist" aria-label="Demo screens" id="ui-tabs"></div>
+              <div class="ui-head">
+                <span class="ui-crumb">Team &gt; <b id="ui-title">To Do</b></span>
+                <span id="ui-action"></span>
+                <span class="ui-jd"><strong id="ui-jd">278</strong><small id="ui-date">Mon 5 Oct</small></span>
+              </div>
+              <div class="ui-body" id="ui-body" role="tabpanel"></div>
+              <div class="ui-foot" id="ui-foot" hidden></div>
+            </div>
+          </div>
+
+          <div class="out" aria-live="polite">
+            <div class="out-head">
+              <div>
+                <p class="kicker" id="out-kicker" style="margin:0 0 2px">Output</p>
+                <h3 id="out-title">Today's progress</h3>
+              </div>
+              <p id="out-sub"></p>
+            </div>
+            <div class="out-body" id="out-body"></div>
+            <div class="out-log">
+              <span>Saved on the phone:</span>
+              <code id="log-line">waiting for a change…</code>
+              <button type="button" id="reset-demo">Reset demo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FEATURES ================= -->
+    <section id="features" class="alt">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Features</p>
+          <h2>Built around a real shift</h2>
+          <p>I use it every working day, so every feature replaced something I used to do by hand.</p>
+        </div>
+        <div class="features">
+          <article class="feature">
+            <div class="icon" style="background:#fde8e8;color:var(--wine)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></svg></div>
+            <h3>Resets itself every morning</h3>
+            <p>Daily tasks come back unticked, weekly ones appear only on their day, and the handover form returns to its defaults. Nobody has to set anything up before the shift.</p>
+          </article>
+          <article class="feature">
+            <div class="icon" style="background:#e7f5ec;color:var(--green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V5a1 1 0 0 1 1-1h2M17 4h2a1 1 0 0 1 1 1v2M20 17v2a1 1 0 0 1-1 1h-2M7 20H5a1 1 0 0 1-1-1v-2M8 8v8M11 8v8M14 8v8M17 8v8"/></svg></div>
+            <h3>Batch codes that can't go wrong</h3>
+            <p>Julian date codes with a fixed supplier suffix, adjusted with − and +. Future dates are blocked, and codes never drop below the latest known batch.</p>
+            <div class="legend"><span class="pill"><i style="background:var(--wine)"></i>To do</span><span class="pill"><i style="background:var(--yellow)"></i>Started</span><span class="pill"><i style="background:var(--green)"></i>Done</span></div>
+          </article>
+          <article class="feature">
+            <div class="icon" style="background:#fff5d9;color:#a77600"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></div>
+            <h3>Warnings before running out</h3>
+            <p>Every product has a reorder point. The stock count turns yellow when it gets close and red below it, so the order list is visible at a glance.</p>
+          </article>
+          <article class="feature">
+            <div class="icon" style="background:#e3f7e1;color:#1c8a3f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 21l2-5.5A8.5 8.5 0 1 1 21 11.5z"/><path d="M8.5 10h7M8.5 13.5h4"/></svg></div>
+            <h3>Reports written for you</h3>
+            <p>A guided form turns the shift into a WhatsApp message, with the process rules built in and required fields checked before anything is copied.</p>
+          </article>
+          <article class="feature">
+            <div class="icon" style="background:#eaf1fd;color:var(--blue)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div>
+            <h3>Photos that answer questions</h3>
+            <p>Every sushi tray and packaging item has its photo and exact contents. New photos come straight from the phone's camera.</p>
+          </article>
+          <article class="feature">
+            <div class="icon" style="background:#f2edf9;color:#6b46c1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg></div>
+            <h3>Made for one hand and a phone</h3>
+            <p>Big tap targets, steppers instead of keyboards, and an icon on the home screen. It opens like an app and works on any phone with a browser.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCREENS ================= -->
+    <section id="screens">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Screens</p>
+          <h2>A look at the real app</h2>
+          <p>Taken from the app I use at work, with names, suppliers, codes and the roster hidden or replaced. Tap a screenshot to enlarge it.</p>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="Screens" id="shot-tabs"></div>
+        <div class="shot-grid">
+          <div class="phone" role="tabpanel" id="shot-panel">
+            <img id="shot-img" src="screens/todo.jpg" width="653" height="828" alt="" data-zoom>
+          </div>
+          <div class="shot-caption" id="shot-caption"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= UNDER THE HOOD ================= -->
+    <section id="under-the-hood" class="alt">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Under the hood</p>
+          <h2>No backend, nothing to maintain</h2>
+          <p>A single static page that keeps the shift's data on the phone, with the fixed data kept private and the published file encrypted.</p>
+        </div>
+
+        <div class="flow">
+          <div class="node">
+            <small>Build</small>
+            <strong>App + base data</strong>
+            <span>App logic merged with a private base file: tasks, items, minimum batch codes, photos and roster.</span>
+          </div>
+          <div class="arrow" aria-hidden="true"><svg><use href="#i-arrow"/></svg></div>
+          <div class="node lock">
+            <small>StatiCrypt</small>
+            <strong>AES-256 encryption</strong>
+            <span>The whole page is encrypted with a password. The repository only ever contains ciphertext.</span>
+          </div>
+          <div class="arrow" aria-hidden="true"><svg><use href="#i-arrow"/></svg></div>
+          <div class="node">
+            <small>GitHub Pages</small>
+            <strong>Static hosting</strong>
+            <span>Free, always on, and redeployed a minute after each commit. No server to keep awake.</span>
+          </div>
+          <div class="arrow" aria-hidden="true"><svg><use href="#i-arrow"/></svg></div>
+          <div class="node">
+            <small>Phone</small>
+            <strong>localStorage + IndexedDB</strong>
+            <span>Day-to-day data and photos stay on the device. Sessions last 10 hours.</span>
+          </div>
+        </div>
+
+        <div class="principles">
+          <div class="principle"><h3>One file</h3><p>Plain HTML, CSS and JavaScript. Only extra: pdf.js, loaded when a PDF roster is uploaded.</p></div>
+          <div class="principle"><h3>Isolated sections</h3><p>Each tab is its own module with scoped styles and state, so one can't break another.</p></div>
+          <div class="principle"><h3>Base data kept apart</h3><p>A new base updates every phone and keeps what was added on the phone itself.</p></div>
+          <div class="principle"><h3>Private by design</h3><p>Logging out forgets the password without touching the data.</p></div>
+        </div>
+
+        <div class="code-grid">
+          <div class="code-card">
+            <header><b>traceability.js</b><span>Batch codes · simplified</span></header>
+<pre><code><span class="tok-c">// Julian date: day of the year, 001–366</span>
+<span class="tok-k">const</span> <span class="tok-f">julian</span> = (d = <span class="tok-k">new</span> Date()) =&gt;
+  Math.floor((d - <span class="tok-k">new</span> Date(d.getFullYear(), <span class="tok-n">0</span>, <span class="tok-n">0</span>)) / <span class="tok-n">864e5</span>);
+
+<span class="tok-k">function</span> <span class="tok-f">setBatchDay</span>(item, day) {
+  <span class="tok-k">const</span> today = julian();
+  <span class="tok-c">// never in the future, never below the latest known batch</span>
+  item.day = Math.min(today, Math.max(item.minDay, day));
+  <span class="tok-k">return</span> <span class="tok-s">`${String(item.day).padStart(3, '0')}-${item.suffix}`</span>;
+}
+
+<span class="tok-k">const</span> <span class="tok-f">rowState</span> = i =&gt;
+  i.done ? <span class="tok-s">'done'</span> : i.given &gt; <span class="tok-n">0</span> ? <span class="tok-s">'started'</span> : <span class="tok-s">'todo'</span>;</code></pre>
+          </div>
+          <div class="code-card">
+            <header><b>handover.js</b><span>Report header · simplified</span></header>
+<pre><code><span class="tok-c">// 14:00 on weekdays, 14:30 on Saturdays</span>
+<span class="tok-k">function</span> <span class="tok-f">reportHeader</span>(now = <span class="tok-k">new</span> Date()) {
+  <span class="tok-k">const</span> [h, m] = now.getDay() === <span class="tok-n">6</span> ? [<span class="tok-n">14</span>, <span class="tok-n">30</span>] : [<span class="tok-n">14</span>, <span class="tok-n">0</span>];
+  <span class="tok-k">const</span> due = <span class="tok-k">new</span> Date(now).setHours(h, m, <span class="tok-n">0</span>, <span class="tok-n">0</span>);
+  <span class="tok-k">const</span> time = <span class="tok-s">`${h}:${String(m).padStart(2, '0')}`</span>;
+
+  <span class="tok-c">// before the report time it goes out as an estimate</span>
+  <span class="tok-k">return</span> now &lt; due
+    ? <span class="tok-s">`*ESTIMATED HANDOVER ${time}*`</span>
+    : <span class="tok-s">`*HANDOVER ${time}*`</span>;
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="stack" aria-label="Tech stack">
+          <span class="chip"><i style="background:#e34f26"></i>HTML</span>
+          <span class="chip"><i style="background:#1572b6"></i>CSS</span>
+          <span class="chip"><i style="background:#e5c100"></i>Vanilla JavaScript</span>
+          <span class="chip"><i style="background:#ff3131"></i>localStorage</span>
+          <span class="chip"><i style="background:#b3252f"></i>IndexedDB</span>
+          <span class="chip"><i style="background:#9ca3af"></i>pdf.js</span>
+          <span class="chip"><i style="background:#2b1618"></i>StatiCrypt</span>
+          <span class="chip"><i style="background:#6e40c9"></i>GitHub Pages</span>
+          <span class="chip"><i style="background:#f05033"></i>Git</span>
+          <span class="chip"><i style="background:#d97757"></i>AI-assisted coding</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= INSTALL ================= -->
+    <section id="install">
+      <div class="wrap run-grid">
+        <div>
+          <p class="kicker">On the phone</p>
+          <h2>Installed in three taps</h2>
+          <p style="color:var(--ink-2);margin:0">No app store and nothing to download. The app is a web page that behaves like an app once it's on the home screen.</p>
+          <ol class="steps">
+            <li><span>Open the link on the phone and enter the password. The session lasts 10 hours.</span></li>
+            <li><span>In Chrome, open the <code>⋮</code> menu and tap <strong>Add to Home screen</strong>.</span></li>
+            <li><span>Open it from the icon. It starts on To Do, ready for the day.</span></li>
+          </ol>
+          <div class="note" style="margin-top:22px">
+            <strong>Where does the data live?</strong> On the phone itself, never on a server. When clearing the browser history, untick <em>Cookies and site data</em> to keep the app's data.
+          </div>
+        </div>
+        <div class="code-card">
+          <header><b>release flow</b><span>bash</span></header>
+<pre><code><span class="tok-c"># 1. Build: app logic + private base data → one HTML file</span>
+<span class="tok-c"># 2. Encrypt it with a password (AES-256)</span>
+npx staticrypt app.html
+
+<span class="tok-c"># 3. Publish: only the encrypted file is committed</span>
+mv encrypted/app.html index.html
+git add index.html
+git commit -m <span class="tok-s">"Release 2.6.0"</span>
+git push   <span class="tok-c"># GitHub Pages redeploys in 1–2 minutes</span></code></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="wrap">
       <div>
-        <h2 id="h-todo">To Do</h2>
-        <p class="summary">The checklist of the shift. It is the first screen the app opens on, and it is ready every morning without anyone setting it up.</p>
-        <ul class="features">
-          <li><b>Daily tasks that reset by themselves</b><span>Transfers, goods in, dispatch, reports, orders and the rest of the routine appear unticked every day, in the order the shift actually runs.</span></li>
-          <li><b>Weekly tasks only on their day</b><span>Some checks happen once a week. They are marked as weekly and only show up on the day they are due, so the list never carries noise.</span></li>
-          <li><b>Tasks added on the fly</b><span>Anything that comes up during the shift goes in with the Add box. New tasks sit on top, show when they were added, and stay until they are done, even across days.</span></li>
-          <li><b>A Done section instead of deleting</b><span>Ticking a task stamps the time and moves it to a collapsed Done section at the end, so the open list only shows what is left.</span></li>
-          <li><b>Manage</b><span>Add, rename, reorder with arrows or remove the daily tasks.</span></li>
-        </ul>
+        <h2>Built by Lautaro Reche</h2>
+        <p>IT Support &amp; Incident Management · Python · SQL · Dublin</p>
       </div>
-    </div>
-  </section>
-
-  <section class="screen flip" id="traceability" aria-labelledby="h-trace">
-    <div class="wrap">
-      <div class="shot"><div class="phone"><img src="screens/traceability.jpg" width="693" height="845" loading="lazy" alt="Traceability screen with batch codes, quantities and done items"></div></div>
-      <div>
-        <h2 id="h-trace">Traceability</h2>
-        <p class="summary">The morning picking of ingredients for production. Every item handed over has to be recorded with its batch code, and this screen keeps that record right.</p>
-        <ul class="features">
-          <li><b>Batch codes in Julian date format</b><span>Each code is the day of the year plus a fixed supplier suffix, for example 275-01. The day changes with − and + or by typing it, and the app won't accept a date in the future.</span></li>
-          <li><b>More than one batch when needed</b><span>When two lots are in use, "+ batch" adds a second code. The next morning only the newest one stays, so the list starts clean.</span></li>
-          <li><b>Shared batches move together</b><span>Products cut from the same lot share one code: changing it once updates all of them.</span></li>
-          <li><b>Given box and clear states</b><span>The Given box records the quantity handed over so far. Each row shows where it stands:</span>
-            <span class="chips"><span class="chip red">Red: to do</span><span class="chip yellow">Yellow: started</span><span class="chip green">Green: done</span></span></li>
-          <li><b>Done collapses the row</b><span>The tick turns the item into a short green line with its code and quantity, keeping its place in the list so the paper sheet can be filled in top to bottom.</span></li>
-          <li><b>Smart starting points</b><span>Items that are always available start the day as done, fresh deliveries start with today's date, and every code is kept at or above the latest known batch.</span></li>
-          <li><b>kg to boxes</b><span>For products requested by weight, a calculator turns the kilos into boxes using the right weight per box.</span></li>
-          <li><b>Manage and Reset</b><span>Manage adds, renames or removes items, changes supplier codes and pins items as always done. Reset clears the day.</span></li>
-        </ul>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://www.linkedin.com/in/lautaroreche/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</a>
+        <a class="btn btn-ghost" href="https://github.com/lautaroreche" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-github"/></svg>GitHub</a>
       </div>
+      <div class="fineprint">Daily routine assistant is a personal project built for my own shift. The live app is password-protected; the demo and screenshots on this page use sample data.</div>
     </div>
-  </section>
+  </footer>
 
-  <section class="screen" id="handover" aria-labelledby="h-handover">
-    <div class="wrap">
-      <div class="shot"><div class="phone"><img src="screens/handover.jpg" width="694" height="845" loading="lazy" alt="Handover form with rice, kitchen porter and other sections"></div></div>
-      <div>
-        <h2 id="h-handover">Handover</h2>
-        <p class="summary">The shift report for the next team, posted in the WhatsApp group. Instead of writing it from memory, a short form produces the message.</p>
-        <ul class="features">
-          <li><b>A guided form by area</b><span>Rice, kitchen porter, vegetables and oven, back area and the afternoon picklist, plus a free Extra field. Dropdowns, chips and checkboxes come with sensible defaults.</span></li>
-          <li><b>Rules built into the rice process</b><span>Rounds follow their real order: mixing, cooking and washing steps unlock one after another, so the report can't describe something impossible.</span></li>
-          <li><b>Required fields are checked</b><span>Copy report won't run until the key fields are filled. Anything missing is named, highlighted and scrolled into view.</span></li>
-          <li><b>A message ready to paste</b><span>The text is written in a clean format: identical statuses grouped on one line and rounds merged.</span></li>
-          <li><b>Estimated or final, automatically</b><span>Before the report time it is sent as an estimate; once the time has passed the header changes to the final report.</span></li>
-          <li><b>Fresh every day</b><span>The form returns to its defaults each new day.</span></li>
-        </ul>
-      </div>
-    </div>
-  </section>
+  <dialog class="lightbox" id="lightbox" aria-label="Enlarged screenshot">
+    <button type="button" id="lightbox-close" aria-label="Close"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+    <img id="lightbox-img" src="" alt="">
+  </dialog>
 
-  <section class="screen flip" id="stock" aria-labelledby="h-stock">
-    <div class="wrap">
-      <div class="shot"><div class="phone"><img src="screens/stock.jpg" width="692" height="849" loading="lazy" alt="Stock count with quantities, units and coloured warnings"></div></div>
-      <div>
-        <h2 id="h-stock">Stock</h2>
-        <p class="summary">The daily count of what is left, written so that it already says what needs ordering.</p>
-        <ul class="features">
-          <li><b>Quick counting</b><span>Products in alphabetical order, each with its own unit (box, bag, kg, pack, bottle). The count starts from the previous day and changes with − and + or by typing.</span></li>
-          <li><b>Equivalences done for you</b><span>Next to the unit, the app shows what the count really means, such as 4 boxes = 28 kg or 2 boxes = 12 bottles.</span></li>
-          <li><b>Warnings before running out</b><span>Every product has a reorder point. Close to it the row turns yellow, below it red, so the order list is visible at a glance.</span></li>
-          <li><b>Supplier at a glance</b><span>A coloured edge on each row shows which supplier the product comes from.</span></li>
-          <li><b>Manage</b><span>Edit reorder points and equivalences, add products with their unit, or remove them.</span></li>
-        </ul>
-      </div>
-    </div>
-  </section>
+  <script>
+  (() => {
+    const $ = (s, r = document) => r.querySelector(s);
+    const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const pad = (n, l = 2) => String(n).padStart(l, '0');
+    const CHECK = '<svg aria-hidden="true"><use href="#i-check"/></svg>';
 
-  <section class="screen" id="packing" aria-labelledby="h-packing">
-    <div class="wrap">
-      <div class="shot"><div class="phone"><img src="screens/packing.jpg" width="692" height="847" loading="lazy" alt="Packing screen with the sushi catalogue"></div></div>
-      <div>
-        <h2 id="h-packing">Packing</h2>
-        <p class="summary">A visual reference to pack the right thing, in two tabs.</p>
-        <ul class="features">
-          <li><b>Sushi</b><span>Every tray with its photo and exact contents, piece counts in bold. Tapping a tray opens its photo full screen. Trays still missing contents or a photo are flagged in red.</span></li>
-          <li><b>Picklist</b><span>Trays, boxes and other packaging, each with carton details such as size and quantity per case. Colours tell the types apart:</span>
-            <span class="chips"><span class="chip red">Trays</span><span class="chip yellow">Boxes</span><span class="chip blue">Bowls and lids</span><span class="chip orange">Condiments</span></span></li>
-          <li><b>Photos that answer questions</b><span>Boxes come with a flat and an assembled photo, with a pair of scissors in the shot for size. An overview photo shows all trays side by side.</span></li>
-          <li><b>Photos from the phone</b><span>Any item can get a new photo straight from the camera.</span></li>
-          <li><b>Manage in both tabs</b><span>Rename items, edit contents or details, change the type, add or remove items and replace photos.</span></li>
-        </ul>
-      </div>
-    </div>
-  </section>
+    /* ============ Dates ============ */
+    const now = new Date();
+    const JD = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 864e5);
+    const code = (day, sfx) => `${pad(day, 3)}-${sfx}`;
+    const hhmm = d => `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    const DATE_LABEL = now.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }).replace(',', '');
+    $('#ui-jd').textContent = pad(JD, 3);
+    $('#ui-date').textContent = DATE_LABEL;
+    $('#float-code').textContent = code(JD - 3, '01');
 
-  <section class="screen flip" id="roster" aria-labelledby="h-roster">
-    <div class="wrap">
-      <div class="shot"><div class="phone"><img src="screens/roster.jpg" width="689" height="916" loading="lazy" alt="Roster screen, with the roster blurred"></div></div>
-      <div>
-        <h2 id="h-roster">Roster</h2>
-        <p class="summary">The weekly roster, always at hand and readable on a phone.</p>
-        <ul class="features">
-          <li><b>Upload a PDF or a photo</b><span>A PDF is turned into page images on the phone, so it opens instantly, works offline and can be zoomed to read any name.</span></li>
-          <li><b>Always something to show</b><span>A base roster ships with the app; a newer upload on the phone takes its place.</span></li>
-          <li><b>Knows when it is old</b><span>It shows which week it is and flags when it hasn't been updated for a week.</span></li>
-        </ul>
-        <p class="privacy">The roster in this screenshot is pixelated on purpose.</p>
-      </div>
-    </div>
-  </section>
+    /* ============ Demo state (sample data) ============ */
+    const SUPPLIERS = { A: '#4c8fe0', B: '#6cc08b', C: '#8b5cf6' };
+    const initial = () => ({
+      todo: [
+        { id: 1, t: 'Opening checklist', done: '06:12' },
+        { id: 2, t: 'Check fridge temperatures', done: '06:20' },
+        { id: 3, t: 'Receive deliveries' },
+        { id: 4, t: 'Prepare dispatch' },
+        { id: 5, t: 'Deep clean dry store', weekly: true },
+        { id: 6, t: 'Stock count' },
+        { id: 7, t: 'Place orders' },
+        { id: 8, t: 'Shift handover' },
+      ],
+      extra: [{ id: 101, t: 'Call maintenance about door seal', added: '07:05', extra: true }],
+      doneOpen: true,
+      trace: [
+        { id: 'a', n: 'Ingredient A', day: JD - 4, min: JD - 4, sfx: '01', given: '', done: true },
+        { id: 'b', n: 'Ingredient B', day: JD, min: JD - 2, sfx: '02', given: '5', done: false },
+        { id: 'c', n: 'Ingredient C', day: JD - 3, min: JD - 3, sfx: '01', given: '', done: false },
+        { id: 'd', n: 'Ingredient D', day: JD - 2, min: JD - 5, sfx: '03', given: '', done: false },
+        { id: 'e', n: 'Ingredient E', day: JD - 3, min: JD - 3, sfx: '03', given: '2', done: false },
+        { id: 'f', n: 'Ingredient F', day: JD - 1, min: JD - 1, sfx: '04', given: '', done: false },
+      ],
+      calc: { kg: 30, per: 7 },
+      stock: [
+        { n: 'Product A', sup: 'A', unit: 'pack', count: 14, min: 6 },
+        { n: 'Product B', sup: 'B', unit: 'bag', per: 8, perU: 'kg', count: 4, min: 4 },
+        { n: 'Product C', sup: 'A', unit: 'box', per: 5, perU: 'kg', count: 12, min: 5 },
+        { n: 'Product D', sup: 'C', unit: 'box', per: 12, perU: 'bottles', count: 2, min: 3 },
+        { n: 'Product E', sup: 'B', unit: 'box', per: 7, perU: 'kg', count: 6, min: 3 },
+        { n: 'Product F', sup: 'C', unit: 'kg', count: 1, min: 2 },
+        { n: 'Product G', sup: 'A', unit: 'bag', per: 40, perU: 'pcs', count: 5, min: 4 },
+      ],
+      ho: { round: 6, wash: null, area: true, trays: 20, dish: '', extra: '', tried: false },
+    });
+    let S = initial();
 
-  <section class="built" id="built" aria-labelledby="h-built">
-    <div class="wrap">
-      <h2 id="h-built">How it's built</h2>
-      <div class="grid">
-        <div class="card"><h3>One file, no backend</h3><p>Plain HTML, CSS and JavaScript in a single page. Nothing to install and no server: it opens like a website and can be added to the home screen.</p></div>
-        <div class="card"><h3>Isolated sections</h3><p>Each tab is its own module with scoped styles and its own state, so a problem in one section can't break the others.</p></div>
-        <div class="card"><h3>Base data kept apart</h3><p>Fixed data such as tasks, items, batch codes, photos and the roster lives in a separate base file merged in at build time. A new base updates every phone and keeps what was added on the phone itself.</p></div>
-        <div class="card"><h3>Private by design</h3><p>Day-to-day data stays on the phone. The published app is encrypted with AES-256, sessions last ten hours and logging out forgets the password without touching the data.</p></div>
-      </div>
-    </div>
-  </section>
+    const TABS = [
+      { id: 'todo', label: 'To Do' },
+      { id: 'trace', label: 'Traceability' },
+      { id: 'handover', label: 'Handover' },
+      { id: 'stock', label: 'Stock' },
+    ];
+    let tab = 'todo';
 
-  <section class="closing">
-    <div class="wrap">
-      <p>It started as a way to stop rewriting the same messages every morning and grew into the tool the whole routine runs on.</p>
-      <div class="cta"><a class="btn" href="./">Open the app</a></div>
-    </div>
-  </section>
-</main>
+    const uiTabs = $('#ui-tabs'), body = $('#ui-body'), foot = $('#ui-foot');
+    const outBody = $('#out-body'), logLine = $('#log-line');
+    uiTabs.innerHTML = TABS.map(t => `<button class="ui-tab" role="tab" data-tab="${t.id}" aria-selected="${t.id === tab}">${t.label}</button>`).join('');
 
-<footer>
-  <div class="wrap">Built by Lautaro Reche. <a href="https://github.com/lautaroreche/daily-routine-assistant">See the repository on GitHub</a></div>
-</footer>
+    function log(text) {
+      logLine.textContent = text;
+      logLine.classList.remove('flash'); void logLine.offsetWidth; logLine.classList.add('flash');
+    }
+
+    /* ---------- To Do ---------- */
+    function renderTodo() {
+      const all = [...S.extra, ...S.todo];
+      const open = all.filter(t => !t.done), done = all.filter(t => t.done);
+      const row = t => `
+        <div class="row ${t.done ? 'is-done' : ''}">
+          <button class="circle" data-act="tick" data-id="${t.id}" aria-label="${t.done ? 'Untick' : 'Tick'} ${esc(t.t)}">${CHECK}</button>
+          <div class="grow"><span>${esc(t.t)}</span>${t.weekly ? '<span class="tag">Weekly</span>' : ''}${t.extra && !t.done ? '<span class="tag new">Extra</span>' : ''}
+            ${t.done ? `<small>Done at ${t.done}</small>` : t.extra ? `<small>Added at ${t.added} · stays until done</small>` : ''}</div>
+        </div>`;
+      body.innerHTML = `
+        <form class="add" data-form="add"><input name="t" placeholder="Add a task…" maxlength="60" aria-label="New task"><button>Add</button></form>
+        <div class="list" style="margin-top:10px">${open.map(row).join('') || '<div class="row" style="--rc:var(--green)"><div class="grow">All done for today 🎉</div></div>'}</div>
+        <button class="ui-sub" data-act="toggle-done" aria-expanded="${S.doneOpen}"><svg aria-hidden="true"><use href="#i-chev"/></svg>Done (${done.length})</button>
+        ${S.doneOpen && done.length ? `<div class="list">${done.map(row).join('')}</div>` : ''}`;
+
+      const total = all.length, n = done.length;
+      setOut('To Do', "Today's progress", 'Daily tasks reset at midnight', `
+        <div class="big-num">${n}<small> / ${total} done</small></div>
+        <div class="progress"><i style="width:${total ? (n / total) * 100 : 0}%"></i></div>
+        <p style="margin:0;color:var(--muted);font-size:.9rem">${open.length ? `${open.length} left. Weekly tasks only show up on their day.` : 'Everything is ticked. Tomorrow the daily list comes back on its own.'}</p>
+        <ul class="mini-list">${done.slice().sort((a, b) => a.done.localeCompare(b.done)).map(t => `<li><span class="dot" style="background:var(--green)"></span>${esc(t.t)}<span class="t">${t.done}</span></li>`).join('') || '<li class="empty">Nothing ticked yet.</li>'}</ul>`);
+    }
+
+    /* ---------- Traceability ---------- */
+    const traceState = i => i.done ? 'done' : (+i.given > 0 ? 'started' : 'todo');
+    function renderTrace() {
+      body.innerHTML = `<div class="list">${S.trace.map(i => {
+        const st = traceState(i);
+        if (st === 'done') return `
+          <div class="row tr done">
+            <span class="name">${i.n} <span class="mono">${code(i.day, i.sfx)}</span>${+i.given ? `<span class="mono">×${+i.given}</span>` : ''}</span>
+            <button class="chk" data-act="done" data-id="${i.id}" aria-label="Undo ${i.n}">${CHECK}</button>
+          </div>`;
+        return `
+          <div class="row tr ${st}">
+            <div class="name">${i.n}</div>
+            <div class="ctrl">
+              <span class="step"><button data-act="day" data-d="-1" data-id="${i.id}" aria-label="Previous day" ${i.day <= i.min ? 'disabled' : ''}>−</button><output>${pad(i.day, 3)}</output><button data-act="day" data-d="1" data-id="${i.id}" aria-label="Next day" ${i.day >= JD ? 'disabled' : ''}>+</button></span>
+              <span class="sfx">-${i.sfx}</span>
+              <span class="sp"></span>
+              <input class="given" type="number" inputmode="numeric" min="0" max="99" placeholder="Given" value="${esc(i.given)}" data-act="given" data-id="${i.id}" aria-label="Quantity given for ${i.n}">
+              <button class="chk" data-act="done" data-id="${i.id}" aria-label="Mark ${i.n} as done">${CHECK}</button>
+            </div>
+          </div>`;
+      }).join('')}</div>
+      <div class="calc"><b>kg → boxes</b><div class="line"><input type="number" min="0" value="${S.calc.kg}" data-act="calc" data-k="kg" aria-label="Kilos requested"> kg ÷ <input type="number" min="1" value="${S.calc.per}" data-act="calc" data-k="per" aria-label="Kilos per box"> kg/box = <output id="calc-out"></output></div></div>`;
+      renderCalc();
+      renderTraceOut();
+    }
+    function renderCalc() {
+      const { kg, per } = S.calc;
+      const r = per > 0 ? kg / per : 0;
+      $('#calc-out').textContent = `${Math.ceil(r)} box${Math.ceil(r) === 1 ? '' : 'es'}${r % 1 ? ` (${r.toFixed(1)})` : ''}`;
+    }
+    function renderTraceOut() {
+      const counts = { todo: 0, started: 0, done: 0 };
+      S.trace.forEach(i => counts[traceState(i)]++);
+      setOut('Traceability', 'The paper sheet, filled in top to bottom', `${counts.done} of ${S.trace.length} done`, `
+        <div class="legend">
+          <span class="pill"><i style="background:var(--wine)"></i>To do · ${counts.todo}</span>
+          <span class="pill"><i style="background:var(--yellow)"></i>Started · ${counts.started}</span>
+          <span class="pill"><i style="background:var(--green)"></i>Done · ${counts.done}</span>
+        </div>
+        <table class="sheet"><thead><tr><th>Item</th><th>Batch code</th><th>Given</th></tr></thead><tbody>
+        ${S.trace.map(i => { const st = traceState(i); return `<tr class="${st === 'done' ? '' : 'pending'}"><td><span class="dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;background:${st === 'done' ? 'var(--green)' : st === 'started' ? 'var(--yellow)' : 'var(--wine)'}"></span>${i.n}</td><td class="hand">${st === 'done' ? code(i.day, i.sfx) : '…'}</td><td class="hand">${st === 'done' ? (+i.given || '✓') : (+i.given ? +i.given + '…' : '…')}</td></tr>`; }).join('')}
+        </tbody></table>`);
+    }
+
+    /* ---------- Stock ---------- */
+    const level = p => p.count < p.min ? 'low' : p.count <= p.min + 1 ? 'close' : 'ok';
+    function renderStock() {
+      body.innerHTML = `<div class="list">${S.stock.map((p, i) => `
+        <div class="row st ${level(p)}" style="--rc:${SUPPLIERS[p.sup]}">
+          <div class="grow"><span>${p.n}</span><small>Supplier ${p.sup} · min ${p.min}</small></div>
+          <span class="step"><button data-act="count" data-d="-1" data-i="${i}" aria-label="Less ${p.n}" ${p.count <= 0 ? 'disabled' : ''}>−</button><output>${p.count}</output><button data-act="count" data-d="1" data-i="${i}" aria-label="More ${p.n}">+</button></span>
+          <span class="unit">${p.unit}${p.per ? `<em>= ${p.count * p.per} ${p.perU}</em>` : ''}</span>
+        </div>`).join('')}</div>`;
+      renderStockOut();
+    }
+    function renderStockOut() {
+      const toOrder = S.stock.filter(p => level(p) !== 'ok');
+      const groups = {};
+      toOrder.forEach(p => (groups[p.sup] = groups[p.sup] || []).push(p));
+      setOut('Stock', 'Order list, already worked out', `${toOrder.length} to review`, toOrder.length ? `
+        <div class="legend"><span class="pill"><i style="background:var(--yellow)"></i>Close to reorder point</span><span class="pill"><i style="background:var(--wine)"></i>Below reorder point</span></div>
+        ${Object.keys(groups).sort().map(k => `
+          <div class="order-group"><h4><i style="background:${SUPPLIERS[k]}"></i>Supplier ${k}</h4>
+            <ul class="mini-list" style="margin:0">${groups[k].map(p => `<li><span class="dot" style="background:${level(p) === 'low' ? 'var(--wine)' : 'var(--yellow)'}"></span>${p.n}<span class="t">${p.count} ${p.unit}${p.count === 1 ? '' : (p.unit === 'kg' ? '' : (p.unit === 'box' ? 'es' : 's'))} · min ${p.min}</span></li>`).join('')}</ul>
+          </div>`).join('')}` : '<p class="empty">Everything is above its reorder point. Try lowering a count with −.</p>');
+    }
+
+    /* ---------- Handover ---------- */
+    const WASH = ['starting to wash', 'washed half', 'washed completely'];
+    const reportTime = () => now.getDay() === 6 ? [14, 30] : [14, 0];
+    function renderHandover() {
+      const h = S.ho, r1 = h.round + 1, r2 = h.round + 2;
+      const chip = (r, s) => {
+        const on = h.wash && h.wash.r === r && h.wash.s === s;
+        const implied = h.wash && h.wash.r === r2 && r === r1;
+        return `<button type="button" class="cb ${on ? 'on' : ''}" data-act="wash" data-r="${r}" data-s="${s}" ${implied ? 'disabled' : ''}>Round ${r} ${WASH[s]}</button>`;
+      };
+      const miss = h.tried ? missing() : [];
+      body.innerHTML = `
+        <div class="ho">
+          <h4><span>1</span>Rice</h4>
+          <label for="ho-round">Last round cooked</label>
+          <select id="ho-round" data-act="round">${Array.from({ length: 10 }, (_, i) => `<option ${i + 1 === h.round ? 'selected' : ''}>${i + 1}</option>`).join('')}</select>
+          <span class="lbl">Washed <i>*</i></span>
+          <div class="chips ${miss.includes('Washed') ? 'invalid' : ''}" id="ho-wash">${[0, 1, 2].map(s => chip(r1, s)).join('')}${[0, 1, 2].map(s => chip(r2, s)).join('')}</div>
+          <label class="check"><input type="checkbox" data-act="area" ${h.area ? 'checked' : ''}>Area behind the rice washers is clean</label>
+        </div>
+        <div class="ho">
+          <h4><span>2</span>Kitchen porter area</h4>
+          <label for="ho-trays">Trays to clean</label>
+          <select id="ho-trays" data-act="trays">${[0, 5, 10, 15, 20, 25, 30].map(n => `<option ${n === h.trays ? 'selected' : ''}>${n}</option>`).join('')}</select>
+          <label for="ho-dish">Dishwasher <i style="color:var(--red);font-style:normal">*</i></label>
+          <select id="ho-dish" data-act="dish" class="${miss.includes('Dishwasher') ? 'invalid' : ''}"><option value="">Choose…</option>${['Clean', 'Running', 'Needs cleaning'].map(o => `<option ${o === h.dish ? 'selected' : ''}>${o}</option>`).join('')}</select>
+        </div>
+        <div class="ho">
+          <h4><span>3</span>Extra</h4>
+          <textarea data-act="extra" placeholder="Anything else the next team should know" aria-label="Extra notes" maxlength="160">${esc(h.extra)}</textarea>
+        </div>`;
+      foot.innerHTML = `<button class="ui-big" data-act="copy" id="copy-btn">Copy report</button>`;
+      renderHandoverOut();
+    }
+    function missing() {
+      const m = [];
+      if (!S.ho.wash) m.push('Washed');
+      if (!S.ho.dish) m.push('Dishwasher');
+      return m;
+    }
+    function reportText(html) {
+      const h = S.ho, r1 = h.round + 1;
+      const [hh, mm] = reportTime();
+      const due = new Date(now); due.setHours(hh, mm, 0, 0);
+      const time = `${hh}:${pad(mm)}`;
+      const M = t => html ? `<span class="miss">${t}</span>` : t;
+      let wash = `Washed: ${M('missing')}`;
+      if (h.wash) wash = h.wash.r === r1 ? `Round ${r1} ${WASH[h.wash.s]}` : `Round ${r1} washed completely, round ${h.wash.r} ${WASH[h.wash.s]}`;
+      const lines = [
+        `*${new Date() < due ? 'ESTIMATED ' : ''}HANDOVER ${time}* · ${DATE_LABEL}`,
+        '',
+        '*1. Rice*',
+        `• Last round cooked: ${h.round}`,
+        `• ${wash}`,
+        `• Area behind the washers: ${h.area ? 'clean ✅' : 'needs cleaning ❌'}`,
+        '',
+        '*2. Kitchen porter*',
+        `• Trays to clean: ${h.trays}`,
+        `• Dishwasher: ${h.dish ? h.dish.toLowerCase() : M('missing')}`,
+      ];
+      if (h.extra.trim()) lines.push('', '*Extra*', `• ${html ? esc(h.extra.trim()) : h.extra.trim()}`);
+      return lines.join('\n');
+    }
+    function renderHandoverOut(msg) {
+      const html = reportText(true).replace(/\*([^*\n]+)\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
+      const m = S.ho.tried ? missing() : [];
+      setOut('Handover', 'The WhatsApp message, written for you', 'Updates as you fill the form', `
+        <div class="wa"><div class="wa-bubble">${html}<span class="time">${hhmm(new Date())} ✓✓</span></div></div>
+        <div class="copy-row">${msg || (m.length ? `<span class="err">Missing: ${m.join(', ')}</span>` : 'Fill the required fields (*) and tap <b>Copy report</b> on the phone.')}</div>`);
+    }
+
+    /* ---------- Shared ---------- */
+    function setOut(kicker, title, sub, html) {
+      $('#out-kicker').textContent = kicker;
+      $('#out-title').textContent = title;
+      $('#out-sub').textContent = sub;
+      outBody.innerHTML = html;
+    }
+    function render(keepScroll) {
+      const y = body.scrollTop;
+      uiTabs.querySelectorAll('.ui-tab').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === tab));
+      $('#ui-title').textContent = TABS.find(t => t.id === tab).label;
+      foot.hidden = tab !== 'handover';
+      ({ todo: renderTodo, trace: renderTrace, stock: renderStock, handover: renderHandover })[tab]();
+      body.scrollTop = keepScroll ? y : 0;
+    }
+
+    uiTabs.addEventListener('click', e => {
+      const b = e.target.closest('.ui-tab'); if (!b || b.dataset.tab === tab) return;
+      tab = b.dataset.tab; render(false);
+    });
+
+    $('#ui').addEventListener('submit', e => {
+      e.preventDefault();
+      const input = e.target.elements.t, t = input.value.trim();
+      if (!t) { input.focus(); return; }
+      S.extra.unshift({ id: Date.now(), t, added: hhmm(new Date()), extra: true });
+      log(`todo.extra.unshift({ text: "${t}", added: "${hhmm(new Date())}" })`);
+      render(true);
+      $('#ui-body input[name="t"]').focus();
+    });
+
+    $('#ui').addEventListener('click', e => {
+      const el = e.target.closest('[data-act]'); if (!el) return;
+      const a = el.dataset.act;
+      if (a === 'tick') {
+        const t = [...S.extra, ...S.todo].find(x => x.id === +el.dataset.id);
+        t.done = t.done ? undefined : hhmm(new Date());
+        log(`todo.done["${t.t}"] = ${t.done ? `"${t.done}"` : 'null'}`);
+        render(true);
+      } else if (a === 'toggle-done') {
+        S.doneOpen = !S.doneOpen; render(true);
+      } else if (a === 'day') {
+        const i = S.trace.find(x => x.id === el.dataset.id);
+        i.day = Math.min(JD, Math.max(i.min, i.day + +el.dataset.d));
+        log(`trace["${i.n}"].batch = "${code(i.day, i.sfx)}"`);
+        render(true);
+      } else if (a === 'done') {
+        const i = S.trace.find(x => x.id === el.dataset.id);
+        i.done = !i.done;
+        log(`trace["${i.n}"] = { batch: "${code(i.day, i.sfx)}", given: ${+i.given || 0}, done: ${i.done} }`);
+        render(true);
+      } else if (a === 'count') {
+        const p = S.stock[+el.dataset.i];
+        p.count = Math.max(0, p.count + +el.dataset.d);
+        log(`stock["${p.n}"] = ${p.count}  → ${({ ok: 'ok', close: 'yellow', low: 'red' })[level(p)]}`);
+        render(true);
+      } else if (a === 'wash') {
+        const r = +el.dataset.r, s = +el.dataset.s;
+        S.ho.wash = S.ho.wash && S.ho.wash.r === r && S.ho.wash.s === s ? null : { r, s };
+        log(`handover.washed = ${S.ho.wash ? `"Round ${r} ${WASH[s]}"` : 'null'}`);
+        render(true);
+      } else if (a === 'copy') {
+        S.ho.tried = true;
+        const m = missing();
+        if (m.length) {
+          render(true);
+          const first = m[0] === 'Washed' ? $('#ho-wash') : $('#ho-dish');
+          body.scrollTo({ top: first.getBoundingClientRect().top - body.getBoundingClientRect().top + body.scrollTop - 60, behavior: 'smooth' });
+          log(`handover: copy blocked, missing ${m.join(', ')}`);
+          return;
+        }
+        const text = reportText(false);
+        const done = ok => {
+          renderHandoverOut(ok ? '<span style="color:var(--green);font-weight:600">✓ Copied. Paste it into WhatsApp to see the formatting.</span>' : 'Your browser blocked the clipboard, but this is the exact text.');
+          const btn = $('#copy-btn'); btn.textContent = ok ? 'Copied ✓' : 'Ready'; btn.classList.add('ok');
+          setTimeout(() => { if ($('#copy-btn')) { $('#copy-btn').textContent = 'Copy report'; $('#copy-btn').classList.remove('ok'); } }, 1800);
+        };
+        log(`clipboard.writeText(report)  · ${text.split('\n').length} lines`);
+        if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(() => done(true), () => done(false));
+        else done(false);
+      }
+    });
+
+    $('#ui').addEventListener('input', e => {
+      const el = e.target.closest('[data-act]'); if (!el) return;
+      const a = el.dataset.act;
+      if (a === 'given') {
+        const i = S.trace.find(x => x.id === el.dataset.id);
+        i.given = el.value.replace(/\D/g, '').slice(0, 2);
+        const row = el.closest('.tr');
+        row.classList.toggle('started', traceState(i) === 'started');
+        row.classList.toggle('todo', traceState(i) === 'todo');
+        log(`trace["${i.n}"].given = ${+i.given || 0}`);
+        renderTraceOut();
+      } else if (a === 'calc') {
+        S.calc[el.dataset.k] = Math.max(0, +el.value || 0);
+        renderCalc();
+      } else if (a === 'extra') {
+        S.ho.extra = el.value;
+        renderHandoverOut();
+      }
+    });
+
+    $('#ui').addEventListener('change', e => {
+      const el = e.target.closest('[data-act]'); if (!el) return;
+      const a = el.dataset.act, h = S.ho;
+      if (a === 'round') { h.round = +el.value; h.wash = null; log(`handover.lastRound = ${h.round}  · washed reset`); render(true); }
+      else if (a === 'trays') { h.trays = +el.value; log(`handover.trays = ${h.trays}`); renderHandoverOut(); }
+      else if (a === 'dish') { h.dish = el.value; log(`handover.dishwasher = "${h.dish}"`); render(true); }
+      else if (a === 'area') { h.area = el.checked; log(`handover.areaClean = ${h.area}`); renderHandoverOut(); }
+    });
+
+    $('#reset-demo').addEventListener('click', () => {
+      S = initial();
+      logLine.textContent = 'waiting for a change…';
+      render(false);
+    });
+    render(false);
+
+    /* ============ Screens ============ */
+    const SHOTS = [
+      { id: 'todo', tab: 'To Do', src: 'screens/todo.jpg', w: 653, h: 828,
+        alt: 'To Do screen with the list of daily tasks.',
+        title: 'To Do',
+        text: 'The checklist of the shift and the screen the app opens on. It is ready every morning without anyone setting it up.',
+        points: [
+          ['Daily tasks that reset by themselves', 'They come back unticked every day, in the order the shift actually runs.'],
+          ['Weekly tasks only on their day', 'Once-a-week checks only show up when they are due, so the list carries no noise.'],
+          ['Tasks added on the fly', 'New tasks sit on top, show when they were added and stay until done, even across days.'],
+          ['A Done section instead of deleting', 'Ticking stamps the time and moves the task to a collapsed section.'],
+        ] },
+      { id: 'traceability', tab: 'Traceability', src: 'screens/traceability.jpg', w: 693, h: 845,
+        alt: 'Traceability screen with batch codes, quantities and done items.',
+        title: 'Traceability',
+        text: 'The morning picking of ingredients for production. Every item handed over is recorded with its batch code.',
+        points: [
+          ['Julian date batch codes', 'Day of the year plus a fixed supplier suffix. Future dates are rejected.'],
+          ['More than one batch when needed', '"+ batch" adds a second code. The next morning only the newest one stays.'],
+          ['Shared batches move together', 'Products cut from the same lot share one code: change it once, update all.'],
+          ['Smart starting points', 'Always-available items start as done and fresh deliveries start with today\'s date.'],
+        ] },
+      { id: 'handover', tab: 'Handover', src: 'screens/handover.jpg', w: 694, h: 845,
+        alt: 'Handover form with rice, kitchen porter and other sections.',
+        title: 'Handover',
+        text: 'The shift report for the next team, posted in the WhatsApp group. A short form produces the message instead of writing it from memory.',
+        points: [
+          ['A guided form by area', 'Dropdowns, chips and checkboxes with sensible defaults, plus a free Extra field.'],
+          ['Process rules built in', 'Rice rounds unlock in their real order, so the report can\'t describe something impossible.'],
+          ['Required fields are checked', 'Anything missing is named, highlighted and scrolled into view before copying.'],
+          ['Estimated or final, automatically', 'The header switches once the report time has passed.'],
+        ] },
+      { id: 'stock', tab: 'Stock', src: 'screens/stock.jpg', w: 692, h: 849,
+        alt: 'Stock count with quantities, units and coloured warnings.',
+        title: 'Stock',
+        text: 'The daily count of what is left, written so that it already says what needs ordering.',
+        points: [
+          ['Quick counting', 'Starts from yesterday\'s count; − and + or type the number.'],
+          ['Equivalences done for you', 'Next to the unit, what the count really means, such as 4 boxes = 28 kg.'],
+          ['Warnings before running out', 'Yellow when close to the reorder point, red below it.'],
+          ['Supplier at a glance', 'A coloured edge on each row shows where the product comes from.'],
+        ] },
+      { id: 'packing', tab: 'Packing', src: 'screens/packing.jpg', w: 692, h: 847,
+        alt: 'Packing screen with the sushi catalogue.',
+        title: 'Packing',
+        text: 'A visual reference to pack the right thing, in two tabs: Sushi and Picklist.',
+        points: [
+          ['Sushi', 'Every tray with its photo and exact contents, piece counts in bold. Missing data is flagged in red.'],
+          ['Picklist', 'Trays, boxes and packaging with carton details, colour-coded by type.'],
+          ['Photos that answer questions', 'Flat and assembled box photos, with a size reference in the shot.'],
+          ['Photos from the phone', 'Any item can get a new photo straight from the camera.'],
+        ] },
+      { id: 'roster', tab: 'Roster', src: 'screens/roster.jpg', w: 689, h: 916,
+        alt: 'Roster screen, with the roster pixelated.',
+        title: 'Roster',
+        text: 'The weekly roster, always at hand and readable on a phone.',
+        points: [
+          ['Upload a PDF or a photo', 'A PDF is turned into page images on the phone, so it opens instantly and zooms.'],
+          ['Always something to show', 'A base roster ships with the app; a newer upload takes its place.'],
+          ['Knows when it is old', 'Shows the current week and flags a roster that hasn\'t been updated.'],
+        ],
+        note: 'The roster in this screenshot is pixelated on purpose.' },
+    ];
+    const tabs = $('#shot-tabs'), shotImg = $('#shot-img'), caption = $('#shot-caption');
+    tabs.innerHTML = SHOTS.map((s, i) => `<button class="tab" role="tab" id="tab-${s.id}" aria-controls="shot-panel" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}" data-i="${i}">${s.tab}</button>`).join('');
+    let preloaded = false;
+    function showShot(i, focus) {
+      const s = SHOTS[i];
+      tabs.querySelectorAll('.tab').forEach((t, j) => { t.setAttribute('aria-selected', j === i); t.tabIndex = j === i ? 0 : -1; });
+      shotImg.src = s.src; shotImg.alt = s.alt; shotImg.width = s.w; shotImg.height = s.h;
+      $('#shot-panel').setAttribute('aria-labelledby', 'tab-' + s.id);
+      caption.innerHTML = `<p class="kicker">${pad(i + 1)} / ${pad(SHOTS.length)}</p><h3>${s.title}</h3><p>${s.text}</p>
+        <ul class="points">${s.points.map(([b, t]) => `<li><b>${b}</b><span>${t}</span></li>`).join('')}</ul>${s.note ? `<p class="shot-note">${s.note}</p>` : ''}`;
+      if (focus) tabs.children[i].focus();
+      if (!preloaded) { preloaded = true; SHOTS.forEach(x => { const im = new Image(); im.src = x.src; }); }
+    }
+    tabs.addEventListener('click', e => { const b = e.target.closest('.tab'); if (b) showShot(+b.dataset.i); });
+    tabs.addEventListener('keydown', e => {
+      const cur = [...tabs.children].findIndex(t => t.getAttribute('aria-selected') === 'true');
+      if (e.key === 'ArrowRight') showShot((cur + 1) % SHOTS.length, true);
+      if (e.key === 'ArrowLeft') showShot((cur - 1 + SHOTS.length) % SHOTS.length, true);
+    });
+    showShot(0);
+
+    /* ============ Lightbox ============ */
+    const lb = $('#lightbox'), lbImg = $('#lightbox-img');
+    document.addEventListener('click', e => {
+      const img = e.target.closest('img[data-zoom]');
+      if (!img || typeof lb.showModal !== 'function') return;
+      lbImg.src = img.currentSrc || img.src; lbImg.alt = img.alt;
+      lb.showModal();
+    });
+    $('#lightbox-close').addEventListener('click', () => lb.close());
+    lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
+  })();
+  </script>
 </body>
 </html>
