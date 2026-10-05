@@ -6,7 +6,7 @@ A password-protected, mobile-first web app I built to speed up my daily routine 
 
 **Live:** https://lautaroreche.github.io/daily-routine-assistant/ (password required)
 
-**Version:** 2.4.2
+**Version:** 2.4.3
 
 ## Sections
 
@@ -62,6 +62,7 @@ When clearing the browser history, untick *Cookies and site data* to keep the ap
 
 ## Repository
 - `index.html` — the encrypted app
+- `about.html` — public presentation page used for sharing (LinkedIn, etc.)
 - `preview.png` — image for shared-link previews
 - `README.md`
 
