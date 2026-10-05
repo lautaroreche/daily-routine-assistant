@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Daily routine assistant</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A mobile web app I built to run my daily routine as Assistant Lead in the Low Risk area of a food production site: tasks, traceability, handover reports, stock and packing.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lautaroreche.github.io/daily-routine-assistant/about.html">
+<meta property="og:title" content="Daily routine assistant">
+<meta property="og:description" content="A mobile web app I built to run my daily routine as Assistant Lead in the Low Risk area of a food production site: tasks, traceability, handover reports, stock and packing.">
+<meta property="og:image" content="https://lautaroreche.github.io/daily-routine-assistant/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👍</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blush:#f8d8d8;      /* the logo's background */
+  --blush-deep:#f1c4c4;
+  --signal:#ff3131;     /* the logo's red */
+  --ink:#3a2526;
+  --ink-soft:#6f5556;
+  --paper:#fffafa;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--blush);color:var(--ink);font:400 17px/1.6 "Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+
+/* hero: the name set big, the way it appears on the logo */
+header{padding:56px 0 28px}
+h1{font-family:"Unbounded","Inter",sans-serif;font-weight:800;color:var(--signal);font-size:clamp(40px,8.5vw,92px);line-height:.98;letter-spacing:-.02em;margin:0;max-width:11ch}
+.lede{font-size:clamp(18px,2.2vw,21px);max-width:58ch;margin:22px 0 0;color:var(--ink)}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;margin-top:28px}
+.open{display:inline-flex;align-items:center;height:52px;padding:0 26px;border-radius:14px;background:var(--signal);color:#fff;font-weight:600;font-size:17px;text-decoration:none;box-shadow:0 8px 22px rgba(255,49,49,.28)}
+.open:hover{background:#e92626}
+.open:focus-visible,a:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.hint{color:var(--ink-soft);font-size:15px}
+
+.shot{margin:36px 0 0}
+.shot img{display:block;width:100%;height:auto;border-radius:22px;border:1px solid var(--blush-deep)}
+
+/* what's inside: a plain list of the six sections */
+main{padding:56px 0 24px}
+h2{font-family:"Unbounded","Inter",sans-serif;font-weight:700;font-size:clamp(24px,3.4vw,32px);line-height:1.15;margin:0 0 22px}
+dl{margin:0;display:grid;grid-template-columns:1fr;border-top:2px solid var(--ink)}
+.row{display:grid;grid-template-columns:1fr;gap:4px 32px;padding:18px 0;border-bottom:1px solid var(--blush-deep)}
+dt{font-weight:600;font-size:18px}
+dd{margin:0;color:var(--ink-soft);max-width:62ch}
+@media (min-width:760px){ .row{grid-template-columns:200px 1fr} }
+
+.how{padding:40px 0 0}
+.how p{max-width:64ch;margin:0 0 14px}
+footer{padding:48px 0 56px;color:var(--ink-soft);font-size:15px}
+footer a{color:var(--ink)}
+@media (prefers-reduced-motion:no-preference){ .open{transition:background .15s} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Daily routine assistant</h1>
+    <p class="lede">A mobile web app I built to run my shift as Assistant Lead in the Low Risk area of a food production site. Paper notes, mental math and retyped WhatsApp messages became a few taps on the phone.</p>
+    <div class="actions">
+      <a class="open" href="./">Open the app</a>
+      <span class="hint">Password required: it holds internal work data.</span>
+    </div>
+    <figure class="shot"><img src="preview.png" width="1200" height="627" alt="The app's To Do screen next to the Daily routine assistant logo"></figure>
+  </header>
+
+  <main>
+    <h2>What it does</h2>
+    <dl>
+      <div class="row"><dt>To Do</dt><dd>Daily and weekly tasks that reset on their own, plus tasks added on the fly. Finished ones move out of the way.</dd></div>
+      <div class="row"><dt>Traceability</dt><dd>Morning picking for production with batch codes in Julian date format, supplier codes, quantities handed over and a kg-to-boxes calculator.</dd></div>
+      <div class="row"><dt>Handover</dt><dd>A guided form that writes the shift report for the team's WhatsApp group, checking required fields and switching from estimated to final at report time.</dd></div>
+      <div class="row"><dt>Stock</dt><dd>Daily count with unit equivalences and reorder points that turn products yellow or red before they run out.</dd></div>
+      <div class="row"><dt>Packing</dt><dd>Photo catalogue of every sushi tray and its contents, and a picklist of trays and boxes with size references.</dd></div>
+      <div class="row"><dt>Roster</dt><dd>The weekly roster, readable and zoomable on the phone.</dd></div>
+    </dl>
+
+    <section class="how">
+      <h2>How it's built</h2>
+      <p>One self-contained HTML file in plain HTML, CSS and JavaScript, with no backend. Each section is an isolated module, and the fixed data (tasks, items, photos) lives in a separate base file that is merged into the app at build time.</p>
+      <p>Everything entered day to day stays on the phone. The published app is encrypted with AES-256, so the public repository only holds ciphertext.</p>
+    </section>
+  </main>
+
+  <footer>Built by Lautaro Reche. <a href="https://github.com/lautaroreche/daily-routine-assistant">See the repository on GitHub</a></footer>
+</div>
+</body>
+</html>
