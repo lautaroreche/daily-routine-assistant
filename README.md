@@ -6,7 +6,7 @@ A password-protected, mobile-first web app I built to speed up my daily routine 
 
 **Live:** https://lautaroreche.github.io/daily-routine-assistant/ (password required)
 
-**Version:** 2.4.3
+**Version:** 2.5.0
 
 ## Sections
 
@@ -45,7 +45,7 @@ Daily stock count, alphabetical.
 ### Packing
 - **Picklist**: trays, boxes and other packaging, colour-coded by type, with carton photos, flat and assembled photos of the boxes (with a size reference) and an overview photo of all trays.
 - **Sushi**: every sushi tray with its photo and contents (pieces in bold); missing photos are flagged.
-- *Manage*: rename, edit contents, add or remove trays, and take or replace photos.
+- *Manage* in both tabs: rename, edit contents or details, change the type and colour, add or remove items, and take or replace photos.
 
 ## How it works
 - A single self-contained HTML file: plain HTML, CSS and vanilla JavaScript. No backend, no build step for the user, no dependencies other than the Inter font and pdf.js (loaded only when a PDF roster is uploaded).
