@@ -2,11 +2,11 @@
 
 ![Daily routine assistant](preview.png)
 
-A password-protected, mobile-first web app I built to speed up my daily routine as Assistant Lead in the Low Risk area of a food production site. It replaces paper notes, mental math and retyped WhatsApp messages with a few taps on the phone.
+A password-protected, mobile-first web app I built to speed up my daily routine as Assistant Lead at a food production site. It replaces paper notes, mental math and retyped WhatsApp messages with a few taps on the phone.
 
 **Live:** https://lautaroreche.github.io/daily-routine-assistant/ (password required)
 
-**Version:** 2.5.0
+**Version:** 2.6.0
 
 ## Sections
 
@@ -64,6 +64,7 @@ When clearing the browser history, untick *Cookies and site data* to keep the ap
 - `index.html` — the encrypted app
 - `about.html` — public presentation page used for sharing (LinkedIn, etc.)
 - `preview.png` — image for shared-link previews
+- `screens/` — screenshots used on the about page (sensitive data hidden)
 - `README.md`
 
 To update, replace `index.html` with the new encrypted version and commit; GitHub Pages redeploys in a minute or two.
