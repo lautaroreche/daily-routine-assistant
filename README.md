@@ -6,7 +6,7 @@ A password-protected, mobile-first web app I built to speed up my daily routine 
 
 **Live:** https://lautaroreche.github.io/daily-routine-assistant/ (password required)
 
-**Version:** 2.6.0
+**Version:** 2.14.1
 
 ## Sections
 
@@ -15,13 +15,14 @@ The weekly work roster, ready to read and zoom on the phone. A base roster ships
 
 ### To Do
 Opens by default.
-- **Daily tasks** that come back unticked every day; some are **weekly** and only appear on their day.
+- **Daily tasks** that come back unticked every day, and **weekly tasks** due on their day; a Daily / Weekly switch shows one or the other (Daily by default, Weekly shows how many are due today).
 - **Extra tasks** added on the fly; they stay until ticked.
 - Ticked tasks move to a collapsed **Done** section instead of being deleted.
-- *Manage*: add, edit, reorder or remove daily tasks.
+- *Manage*: add, edit, reorder or remove fixed tasks, and set each one as Daily or Weekly (with its day).
 
 ### Traceability
-Morning picking of ingredients for the production team, alphabetical.
+Morning picking of ingredients for the production team.
+- Same filters as Stock: place (with the items still to do in each), suppliers checklist and A–Z / Sheet order; supplier and place shown under each item, shared with Stock.
 - Batch codes in Julian date format (`DDD-SS`) with a fixed supplier suffix per item; adjust with `+` / `−` or type the day.
 - Several batches per item when needed; each new day starts with only the newest one.
 - **Given** box for the quantity handed over so far, done tick, and items pinned as *always done*.
@@ -36,16 +37,20 @@ Shift handover report for the WhatsApp group.
 - Everything returns to its defaults every day.
 
 ### Stock
-Daily stock count, alphabetical.
+Daily stock count of every product on the paper stock sheet.
 - Starts from the previous day's count; `+` / `−` or type the number.
+- Place selector (All, Fridge, Goods in, Warehouse) with the number of products in each, to count one area at a time.
+- Suppliers button that opens a checklist (main suppliers ticked by default), combinable with the place.
+- A–Z by default, with a Sheet option that follows the paper stock sheet to copy the numbers easily.
 - Unit per product and automatic equivalences (e.g. `3 BOX = 13.5 kg`).
 - Reorder points: products turn yellow when close and red when below.
-- *Manage*: reorder points, editable equivalences, add or remove products.
+- *Manage*: unit, place, reorder point and equivalence per product; add or remove products.
 
 ### Packing
 - **Picklist**: trays, boxes and other packaging, colour-coded by type, with carton photos, flat and assembled photos of the boxes (with a size reference) and an overview photo of all trays.
 - **Sushi**: every sushi tray with its photo and contents (pieces in bold); missing photos are flagged.
-- *Manage* in both tabs: rename, edit contents or details, change the type and colour, add or remove items, and take or replace photos.
+- **Packing**: the packings of each client, with the cardboard box they go in and the sushi trays they carry (quantity and tray size).
+- *Manage* in every tab: rename, edit contents or details, change the type and colour, add or remove items, and take or replace photos.
 
 ## How it works
 - A single self-contained HTML file: plain HTML, CSS and vanilla JavaScript. No backend, no build step for the user, no dependencies other than the Inter font and pdf.js (loaded only when a PDF roster is uploaded).
