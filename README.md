@@ -6,7 +6,7 @@ A password-protected, mobile-first web app I built to speed up my daily routine 
 
 **Live:** https://lautaroreche.github.io/daily-routine-assistant/ (password required)
 
-**Version:** 2.14.1
+**Version:** 2.15.0
 
 ## Sections
 
