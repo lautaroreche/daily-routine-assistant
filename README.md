@@ -6,7 +6,7 @@ A password-protected, mobile-first web app I built to speed up my daily routine 
 
 **Live:** https://lautaroreche.github.io/daily-routine-assistant/ (password required)
 
-**Version:** 2.15.0
+**Version:** 2.16.0
 
 ## Sections
 
@@ -34,6 +34,7 @@ Shift handover report for the WhatsApp group.
 - Guided form with dropdowns, chips and checkboxes; required fields are checked before copying.
 - Business rules built in (rice steps in order, lines merged by round, identical statuses grouped).
 - The header switches automatically from the *estimated* report to the final one once the report time has passed (14:00, or 14:30 on Saturdays).
+- A Reset button (two taps) brings the form back to its defaults once something has changed.
 - Everything returns to its defaults every day.
 
 ### Stock
