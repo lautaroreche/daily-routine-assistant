@@ -6,9 +6,10 @@ A password-protected, mobile-first web app I built to speed up my daily routine 
 
 **Live:** https://lautaroreche.github.io/daily-routine-assistant/ (password required)
 
-**Version:** 2.18.0
+**Version:** 2.19.0
 
 ## Sections
+Everything is reached from the **☰ menu** at the top left of each screen, grouped by Team, Shift, Packing and Your data.
 
 ### 🗓️ Roster
 The weekly work roster, ready to read and zoom on the phone. A base roster ships with the app; uploading a newer PDF or photo on the phone takes priority. Shows how old the current roster is.
@@ -58,8 +59,11 @@ Daily stock count of every product on the paper stock sheet.
 - Each section is an isolated module (scoped CSS, independent state); an error in one section can't break the others.
 - **Base data and app logic are separate.** Everything fixed (daily tasks, items with minimum batch codes, stock settings, packing catalogue and photos, roster) lives in a base data file that is embedded into the app when it is built. A new base version updates every phone while keeping what was added on the phone itself. The base file is kept private and is not part of this repository.
 - Day-to-day data is stored on the device (`localStorage`, and IndexedDB for photos). It never leaves the phone.
-- The published page is encrypted with [StatiCrypt](https://github.com/robinmoisson/staticrypt) (AES-256): the repository only contains ciphertext. Sessions last 10 hours; the log-out button at the end of the tab bar forgets the password on that phone without touching the data.
+- The published page is encrypted with [StatiCrypt](https://github.com/robinmoisson/staticrypt) (AES-256): the repository only contains ciphertext. Sessions last 48 hours; *Log out* in the menu forgets the password on that phone without touching the data.
 - Open Graph tags and `preview.png` give the link a proper preview when shared.
+
+## Your data between devices
+**Export backup** (in the menu) packs everything entered on the device (ticks, counts, batches, tasks, edits, uploaded roster and photos) into a `.json` file to share or download; **Import backup** on another phone or computer restores it after confirmation, without touching the login.
 
 ## Usage
 Open the link on the phone, log in, and add it to the home screen (Chrome: ⋮ menu → *Add to Home screen*).
