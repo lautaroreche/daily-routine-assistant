@@ -6,7 +6,7 @@ A password-protected, mobile-first web app I built to speed up my daily routine 
 
 **Live:** https://lautaroreche.github.io/daily-routine-assistant/ (password required)
 
-**Version:** 2.20.0
+**Version:** 2.20.1
 
 ## Sections
 Everything is reached from the **☰ menu** at the top left of each screen, grouped by Team, Shift, Packing, Settings and Your data.
@@ -19,7 +19,7 @@ Opens by default.
 - **Daily tasks** that come back unticked every day, and **weekly tasks** due on their day; a Daily / Weekly switch shows one or the other (Daily by default, Weekly shows how many are due today).
 - **Extra tasks** added on the fly; they stay until ticked.
 - Green tick on the right to mark a task done; ticked tasks move to a collapsed **Done** section instead of being deleted.
-- **Delegate**: the person button on the left assigns a task to someone (recent names remembered). Delegated tasks stay open in orange with the person's name until ticked; some fixed tasks are delegated by default every day.
+- **Delegate**: one tap on the person button on the left marks a task as delegated (another tap takes it back). Delegated tasks stay open in orange until ticked; some fixed tasks are delegated by default every day.
 - *Manage*: add, edit, reorder or remove fixed tasks, set each one as Daily or Weekly (with its day), and mark the ones that are always delegated.
 
 ### Traceability
@@ -27,7 +27,7 @@ Morning picking of ingredients for the production team.
 - One compact line per item (name, batch, code, Given, done) so most of the sheet fits on one screen.
 - Same filters as Stock: place (with the items still to do in each), suppliers checklist and A–Z / Sheet order; supplier and place shared with Stock.
 - Batch codes in Julian date format (`DDD-SS`), where `SS` is the supplier's traceability code from Settings; adjust with `+` / `−` or type the day.
-- Several batches per item when needed; each new day starts with only the newest one.
+- Several batches per item when needed (`+ batch` / `− batch` under the name, which removes the last one); each new day starts with only the newest one.
 - **Given** box for the quantity handed over so far, done tick, and items pinned as *always done*.
 - kg → boxes calculator for items requested by weight.
 - *Manage*: add items by choosing their supplier (the code follows), rename or remove them, choose a typed batch instead of `DDD-SS`, pin always-done items.
