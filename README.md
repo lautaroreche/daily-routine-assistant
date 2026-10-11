@@ -6,7 +6,7 @@ A password-protected, mobile-first web app I built to speed up my daily routine 
 
 **Live:** https://lautaroreche.github.io/daily-routine-assistant/ (password required)
 
-**Version:** 2.22.0
+**Version:** 2.22.1
 
 ## Sections
 Everything is reached from the **☰ menu** at the top left of each screen, grouped by Team, Shift, Packing, Settings and Your data. The header always shows where you are, e.g. *Shift > To Do* or *Settings > Products*.
