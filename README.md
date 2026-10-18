@@ -6,10 +6,10 @@ A password-protected, mobile-first web app I built to speed up my daily routine 
 
 **Live:** https://lautaroreche.github.io/daily-routine-assistant/ (password required)
 
-**Version:** 2.23.0
+**Version:** 2.24.0
 
 ## Sections
-Everything is reached from the **☰ menu** at the top left of each screen, grouped by Team, Shift, Packing, Settings and Your data. The header always shows where you are, e.g. *Shift > To Do* or *Settings > Products*.
+Everything is reached from the **☰ menu** at the top left of each screen, grouped by Team, Shift, Packing, Warehouse, Settings and Your data. The header always shows where you are, e.g. *Shift > To Do* or *Settings > Products*.
 
 ### 🗓️ Roster
 The weekly work roster, ready to read and zoom on the phone. A base roster ships with the app; uploading a newer PDF or photo on the phone takes priority. Shows how old the current roster is.
@@ -56,6 +56,10 @@ Daily stock count of every product on the paper stock sheet.
 - **Sushi**: every sushi tray with its photo and contents (pieces in bold); missing photos are flagged.
 - **Packing**: the packings of each client, with the cardboard box they go in, the name on the case when it differs from the dispatch sheet, and the sushi trays they carry (quantity and tray size).
 - *Manage* in every tab: rename, edit contents or details, change the type and colour, add or remove items, and take or replace photos.
+
+### Warehouse
+- **Pallet**: the list of what goes on the pallet outside, grouped by unit (box, pack, bottle…) with `+` / `−` per product. A preview shows the message and **Copy list** puts it on the clipboard to paste in WhatsApp; products at 0 are left out. Quantities stay until changed, and a Reset button (two taps) brings back the defaults.
+- *Manage*: add products from **Settings › Products** with their unit, change the unit or order, or remove them.
 
 ### ⚙️ Settings
 - **Suppliers**: the single list of suppliers for the whole app, with traceability code (required; no two suppliers share one), colour, order and ★ main ones (ticked by *Main ones* in the filters). Add, rename, change the code, reorder or remove (blocked while a product uses it); Traceability codes, Stock and both supplier filters update straight away.

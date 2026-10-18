@@ -287,7 +287,7 @@ dialog.lightbox button svg{width:18px;height:18px}
           <span>The live app holds internal work data, so it asks for a password. The demo and screenshots on this page use made-up names and codes.</span>
         </div>
         <div class="stats" aria-label="Key facts">
-          <div class="stat"><b>7</b><span>sections</span></div>
+          <div class="stat"><b>8</b><span>sections</span></div>
           <div class="stat"><b>1</b><span>HTML file</span></div>
           <div class="stat"><b>0</b><span>servers</span></div>
           <div class="stat"><b>AES-256</b><span>encrypted</span></div>
@@ -341,8 +341,8 @@ dialog.lightbox button svg{width:18px;height:18px}
     <div class="wrap">
       <div class="section-head">
         <p class="kicker">Features</p>
-        <h2>Seven sections, one routine</h2>
-        <p>Everything is reached from a menu, grouped the way the shift runs: team, shift, packing and settings.</p>
+        <h2>Eight sections, one routine</h2>
+        <p>Everything is reached from a menu, grouped the way the shift runs: team, shift, packing, warehouse and settings.</p>
       </div>
       <div class="features">
         <article class="feature">
@@ -381,6 +381,12 @@ dialog.lightbox button svg{width:18px;height:18px}
           <p>The weekly roster from a PDF or a photo, turned into images on the phone so it opens instantly, works offline and can be zoomed. It flags when it is a week old.</p>
         </article>
         <article class="feature wide">
+          <div class="icon" style="background:#fff3e0;color:var(--orange)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h6v6H5zM13 4h6v6h-6zM9 10h6v5H9z"/><path d="M3 17h18M5 17v3M12 17v3M19 17v3"/></svg></div>
+          <h3>Warehouse: the pallet list in one tap</h3>
+          <p>What goes on the pallet outside, grouped by unit with a quick + / − per product. The message is ready to copy and paste in WhatsApp, leaving out anything at zero.</p>
+          <div class="tags"><span>Box</span><span>Pack</span><span>Bottle</span><span>Copy list</span></div>
+        </article>
+        <article class="feature wide">
           <div class="icon" style="background:#f2eeee;color:var(--ink-2)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3z"/><path d="M14 9h4l3 3v4h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></div>
           <h3>Settings: one source for suppliers and products</h3>
           <p>Suppliers (with unique traceability codes, colours and order) and products live in one place. A grid decides where each product appears, Traceability or Stock, and every screen reads from there, so a change is made once and shows everywhere.</p>
@@ -417,7 +423,7 @@ dialog.lightbox button svg{width:18px;height:18px}
       <div class="flow">
         <div class="node"><small>Build · Python</small><strong>Sections + base data</strong><span>Each section is its own page with scoped styles. Tasks, products, suppliers, photos and the roster live in a private base file merged in at build time.</span></div>
         <div class="arrow" aria-hidden="true"><svg><use href="#i-arrow"/></svg></div>
-        <div class="node"><small>Publish · StatiCrypt</small><strong>AES-256 on GitHub Pages</strong><span>The repository only holds ciphertext. Sessions last 24 hours, logging out forgets the password on that phone, and a strict security policy only lets the page run its own code.</span></div>
+        <div class="node"><small>Publish · StatiCrypt</small><strong>AES-256 on GitHub Pages</strong><span>The repository only holds ciphertext. Sessions last a week, logging out forgets the password on that phone, and a strict security policy only lets the page run its own code.</span></div>
         <div class="arrow" aria-hidden="true"><svg><use href="#i-arrow"/></svg></div>
         <div class="node"><small>Phone · Browser storage</small><strong>localStorage + IndexedDB</strong><span>Ticks, counts, batches and photos stay on the device. A new base version updates every phone and keeps what was added there.</span></div>
       </div>
@@ -443,7 +449,7 @@ dialog.lightbox button svg{width:18px;height:18px}
         <h2>On the phone, all shift long</h2>
         <p style="color:var(--ink-2)">It opens like a website and behaves like an app.</p>
         <ol class="steps">
-          <li>Open the link and enter the password once; the session lasts 24 hours.</li>
+          <li>Open the link and enter the password once; the session lasts a week.</li>
           <li>Add it to the home screen from the browser menu.</li>
           <li>Move everything to another phone or computer with <strong>Export backup</strong> and <strong>Import backup</strong> in the menu.</li>
         </ol>
