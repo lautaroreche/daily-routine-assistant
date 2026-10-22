@@ -6,17 +6,17 @@ A password-protected, mobile-first web app I built to speed up my daily routine 
 
 **Live:** https://lautaroreche.github.io/daily-routine-assistant/ (password required)
 
-**Version:** 2.24.0
+**Version:** 2.26.0
 
 ## Sections
 Everything is reached from the **☰ menu** at the top left of each screen, grouped by Team, Shift, Packing, Warehouse, Settings and Your data. The header always shows where you are, e.g. *Shift > To Do* or *Settings > Products*.
 
 ### 🗓️ Roster
-The weekly work roster, ready to read and zoom on the phone. A base roster ships with the app; uploading a newer PDF or photo on the phone takes priority. Shows how old the current roster is.
+The weekly work roster as a short preview (tap to read and zoom it full size). A base roster ships with the app; uploading a newer PDF or photo on the phone takes priority. Shows how old the current roster is. Below it, **Who is where**: day by day, who works in each area (read from the roster when it is added to the base), with a button that copies the day for the Dayshift group.
 
 ### To Do
 Opens by default.
-- **Daily tasks** that come back unticked every day, and **weekly tasks** due on their day; a Daily / Weekly switch shows one or the other (Daily by default, Weekly shows how many are due today).
+- **Daily tasks** that come back unticked every day, and **weekly tasks** that join the same list on their day, highlighted in violet with a *Weekly* badge.
 - **Extra tasks** added on the fly; they stay on top until ticked, then the fixed tasks in their Manage order (delegating never moves a task).
 - Two buttons on the right of each task: the orange one delegates, the green tick marks it done; ticked tasks move to a collapsed **Done** section instead of being deleted.
 - **Delegate**: one tap on the orange button marks a task as delegated (another tap takes it back). Delegated tasks stay open in orange until ticked; some fixed tasks are delegated by default every day.
@@ -27,6 +27,7 @@ Morning picking of ingredients for the production team.
 - One compact line per item (name, batch, code, Given, done) so most of the sheet fits on one screen.
 - Same filters as Stock: place (with the items still to do in each), suppliers checklist and A–Z / Sheet order; supplier and place shared with Stock.
 - Batch codes in Julian date format (`DDD-SS`), where `SS` is the supplier's traceability code from Settings; adjust with `+` / `−` or type the day.
+- Base batches come from the latest paper sheet: a new one replaces the one on the phone (newer or older) and then works as a minimum.
 - Several batches per item when needed (`+ batch` / `− batch` under the name, which removes the last one); each new day starts with only the newest one.
 - **Given** box for the quantity handed over so far and done tick; every item starts the day open.
 - kg → boxes calculator for items requested by weight.
@@ -38,6 +39,7 @@ Shift handover report for the WhatsApp group.
 - Business rules built in (rice steps in order, lines merged by round, identical statuses grouped).
 - The header switches automatically from the *estimated* report to the final one once the report time has passed (14:00, or 14:30 on Saturdays).
 - A Reset button (two taps) brings the form back to its defaults once something has changed.
+- Rice: *Mixed* includes "waiting the 20 minutes".
 - Everything returns to its defaults every day.
 
 ### Stock
@@ -47,6 +49,7 @@ Daily stock count of every product on the paper stock sheet.
 - Suppliers button that opens a checklist (main suppliers ticked by default), combinable with the place.
 - A–Z by default, with a Sheet option that follows the paper stock sheet to copy the numbers easily.
 - Unit per product and automatic equivalences (e.g. `3 BOX = 13.5 kg`).
+- **Pallet calc** on products stacked on pallets: rows × units per row + loose ones, and *Use* puts the total in the count (units per row are remembered).
 - Reorder points: products turn yellow when close and red when below.
 - Products come from **Settings › Products** (the ones ticked for Stock).
 - *Manage*: reorder point per product (the only thing edited here).
@@ -58,8 +61,8 @@ Daily stock count of every product on the paper stock sheet.
 - *Manage* in every tab: rename, edit contents or details, change the type and colour, add or remove items, and take or replace photos.
 
 ### Warehouse
-- **Pallet**: the list of what goes on the pallet outside, grouped by unit (box, pack, bottle…) with `+` / `−` per product. A preview shows the message and **Copy list** puts it on the clipboard to paste in WhatsApp; products at 0 are left out. Quantities stay until changed, and a Reset button (two taps) brings back the defaults.
-- *Manage*: add products from **Settings › Products** with their unit, change the unit or order, or remove them.
+- **Pallet**: the list of what goes on the pallet outside, grouped by unit (box, pack, bottle, roll…) with `+` / `−` per item. A preview shows the message and **Copy list** puts it on the clipboard to paste in WhatsApp; products at 0 are left out. Quantities stay until changed, and a Reset button (two taps) brings back the defaults.
+- *Manage*: add products from **Settings › Products** or type items that aren't there (gloves, labels…), with their unit; change the unit or order, or remove them.
 
 ### ⚙️ Settings
 - **Suppliers**: the single list of suppliers for the whole app, with traceability code (required; no two suppliers share one), colour, order and ★ main ones (ticked by *Main ones* in the filters). Add, rename, change the code, reorder or remove (blocked while a product uses it); Traceability codes, Stock and both supplier filters update straight away.
