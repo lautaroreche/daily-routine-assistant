@@ -6,7 +6,7 @@ A password-protected, mobile-first web app I built to speed up my daily routine 
 
 **Live:** https://lautaroreche.github.io/daily-routine-assistant/ (password required)
 
-**Version:** 2.26.0
+**Version:** 2.26.1
 
 ## Sections
 Everything is reached from the **☰ menu** at the top left of each screen, grouped by Team, Shift, Packing, Warehouse, Settings and Your data. The header always shows where you are, e.g. *Shift > To Do* or *Settings > Products*.
@@ -49,7 +49,7 @@ Daily stock count of every product on the paper stock sheet.
 - Suppliers button that opens a checklist (main suppliers ticked by default), combinable with the place.
 - A–Z by default, with a Sheet option that follows the paper stock sheet to copy the numbers easily.
 - Unit per product and automatic equivalences (e.g. `3 BOX = 13.5 kg`).
-- **Pallet calc** on products stacked on pallets: rows × units per row + loose ones, and *Use* puts the total in the count (units per row are remembered).
+- **Pallet calc** on products stacked on pallets: rows × units per row, and *Use* puts the total in the count (units per row are remembered).
 - Reorder points: products turn yellow when close and red when below.
 - Products come from **Settings › Products** (the ones ticked for Stock).
 - *Manage*: reorder point per product (the only thing edited here).
