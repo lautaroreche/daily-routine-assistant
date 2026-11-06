@@ -6,13 +6,13 @@ A password-protected, mobile-first web app I built to speed up my daily routine 
 
 **Live:** https://lautaroreche.github.io/daily-routine-assistant/ (password required)
 
-**Version:** 2.26.4
+**Version:** 2.27.1
 
 ## Sections
-Everything is reached from the **☰ menu** at the top left of each screen, grouped by Team, Shift, Packing, Warehouse, Settings and Your data. The header always shows where you are, e.g. *Shift > To Do* or *Settings > Products*.
+Everything is reached from the **☰ menu** at the top left of each screen, grouped by Team, Shift, Packing, Pallet prepare, Settings and Your data. The header always shows where you are, e.g. *Shift > To Do* or *Settings > Products*.
 
 ### 🗓️ Roster
-The weekly work roster as a short preview (tap to read and zoom it full size). A base roster ships with the app; uploading a newer PDF or photo on the phone takes priority. Shows how old the current roster is. Below it, **Who is where**: day by day, who works in each area (read from the roster when it is added to the base), with a button that copies the day for the Dayshift group.
+The weekly work roster as a short preview (tap to read and zoom it full size). A base roster ships with the app; uploading a newer PDF or photo on the phone takes priority. Shows how old the current roster is. Below it, **Who is where**: day by day, who works in each area (read from the roster when it is added to the base), with each person's start time and a **Copy report** button that copies the day, ready to paste in WhatsApp.
 
 ### To Do
 Opens by default.
@@ -49,19 +49,19 @@ Daily stock count of every product on the paper stock sheet.
 - Suppliers button that opens a checklist (main suppliers ticked by default), combinable with the place.
 - A–Z by default, with a Sheet option that follows the paper stock sheet to copy the numbers easily.
 - Unit per product and automatic equivalences (e.g. `3 BOX = 13.5 kg`).
-- **Pallet calc** on products stacked on pallets: rows × units per row, and *Use* puts the total in the count (units per row are remembered).
+- **Calculate** on products stacked on pallets: rows × units per row, and *Use* puts the total in the count (units per row are remembered).
 - Reorder points: products turn yellow when close and red when below.
 - Products come from **Settings › Products** (the ones ticked for Stock).
 - *Manage*: reorder point per product (the only thing edited here).
 
 ### Packing
-- **Picklist**: trays, boxes and other packaging, colour-coded by type, with carton photos, flat and assembled photos of the boxes (with a size reference) and an overview photo of all trays.
+- **Picklist**: split into Trays / Lids (grouped by size, each option with its code, maker and material), Boxes and Condiments, with carton photos, flat and assembled photos of the boxes (with a size reference) and an overview photo of all trays.
 - **Sushi**: every sushi tray with its photo and contents (pieces in bold); missing photos are flagged.
 - **Packing**: the packings of each client, with the cardboard box they go in, the name on the case when it differs from the dispatch sheet, and the sushi trays they carry (quantity and tray size).
 - *Manage* in every tab: rename, edit contents or details, change the type and colour, add or remove items, and take or replace photos.
 
-### Warehouse
-- **Pallet**: the list of what goes on the pallet outside, grouped by unit (box, pack, bottle, roll…) with `+` / `−` per item. A preview shows the message and **Copy list** puts it on the clipboard to paste in WhatsApp; products at 0 are left out. Quantities stay until changed, and a Reset button (two taps) brings back the defaults.
+### Pallet prepare
+- **Goods in** and **Warehouse**: two pallet lists, each with its own items. The Warehouse one is what goes on the pallet outside, grouped by unit (box, pack, bottle, roll…) with `+` / `−` per item. A preview shows the message and **Copy list** puts it on the clipboard to paste in WhatsApp; products at 0 are left out. Quantities stay until changed, and a Reset button (two taps) brings back the defaults.
 - *Manage*: add products from **Settings › Products** or type items that aren't there (gloves, labels…), with their unit; change the unit or order, or remove them.
 
 ### ⚙️ Settings
