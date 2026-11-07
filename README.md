@@ -6,7 +6,7 @@ A password-protected, mobile-first web app I built to speed up my daily routine 
 
 **Live:** https://lautaroreche.github.io/daily-routine-assistant/ (password required)
 
-**Version:** 2.27.1
+**Version:** 2.28.0
 
 ## Sections
 Everything is reached from the **☰ menu** at the top left of each screen, grouped by Team, Shift, Packing, Pallet prepare, Settings and Your data. The header always shows where you are, e.g. *Shift > To Do* or *Settings > Products*.
@@ -70,7 +70,7 @@ Daily stock count of every product on the paper stock sheet.
 
 ## How it works
 - A single self-contained HTML file: plain HTML, CSS and vanilla JavaScript. No backend, no build step for the user, no dependencies other than pdf.js, loaded only when a PDF roster is uploaded and checked with an integrity hash (SRI). The Inter font is embedded.
-- Each section is an isolated module (scoped CSS, independent state); an error in one section can't break the others.
+- Each section is an isolated module (scoped CSS, independent state); an error in one section can't break the others; the small helpers they all need (building elements, two-tap confirm, copy to clipboard, the date in the header) are shared once.
 - **Base data and app logic are separate.** Everything fixed (daily tasks, items with minimum batch codes, stock settings, packing catalogue and photos, roster) lives in a base data file that is embedded into the app when it is built. A new base version updates every phone while keeping what was added on the phone itself. The base file is kept private and is not part of this repository.
 - Day-to-day data is stored on the device (`localStorage`, and IndexedDB for photos). It never leaves the phone.
 - The published page is encrypted with [StatiCrypt](https://github.com/robinmoisson/staticrypt) (AES-256): the repository only contains ciphertext. Sessions last a week; *Log out* in the menu forgets the password on that phone without touching the data.
