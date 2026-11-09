@@ -6,7 +6,7 @@ A password-protected, mobile-first web app I built to speed up my daily routine 
 
 **Live:** https://lautaroreche.github.io/daily-routine-assistant/ (password required)
 
-**Version:** 2.28.0
+**Version:** 2.29.1
 
 ## Sections
 Everything is reached from the **☰ menu** at the top left of each screen, grouped by Team, Shift, Packing, Pallet prepare, Settings and Your data. The header always shows where you are, e.g. *Shift > To Do* or *Settings > Products*.
@@ -33,6 +33,12 @@ Morning picking of ingredients for the production team.
 - kg → boxes calculator for items requested by weight.
 - Items come from **Settings › Products** (the ones ticked for Traceability); nothing is added or edited here.
 
+### Received
+What arrived and when, to answer "when did we get it?".
+- Log each delivery: product, quantity, julian (today by default) and, if wanted, the use by.
+- The list goes day by day, newest first, with the batch code (`DDD-SS`) of each product; filter by supplier or find a product by name.
+- Kept 120 days; a wrong entry is deleted with × (two taps).
+
 ### Handover
 Shift handover report for the WhatsApp group.
 - Guided form with dropdowns, chips and checkboxes; required fields are checked before copying.
@@ -49,7 +55,7 @@ Daily stock count of every product on the paper stock sheet.
 - Suppliers button that opens a checklist (main suppliers ticked by default), combinable with the place.
 - A–Z by default, with a Sheet option that follows the paper stock sheet to copy the numbers easily.
 - Unit per product and automatic equivalences (e.g. `3 BOX = 13.5 kg`).
-- **Calculate** on products stacked on pallets: rows × units per row, and *Use* puts the total in the count (units per row are remembered).
+- **Rows** on products stacked on pallets: count the rows with big +/− buttons and *Use* puts rows × units per row in the count. Units per row are set in *Manage*, next to the reorder point.
 - Reorder points: products turn yellow when close and red when below.
 - Products come from **Settings › Products** (the ones ticked for Stock).
 - *Manage*: reorder point per product (the only thing edited here).
